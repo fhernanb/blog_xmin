@@ -11,6 +11,11 @@ footnotereturnlinkcontents = "↩"
 [permalinks]
     post = "/post/:year/:month/:day/:slug/"
     note = "/note/:year/:month/:day/:slug/"
+    
+[[params.social]]
+    icon = "github"
+    icon_pack = "fa"
+    link = "//github.com/apreshill"
 
 [[menu.main]]
     name = "Home"
@@ -28,10 +33,19 @@ footnotereturnlinkcontents = "↩"
     name = "Tags"
     url = "/tags/"
     weight = 4
-[[menu.main]]
-    name = "Subscribe"
-    url = "/index.xml"
 
 [params]
     description = "A website built through Hugo and blogdown."
     footer = "&copy; [Yihui Xie](https://yihui.name) 2017 -- 2018 | [Github](https://github.com/yihui) | [Twitter](https://twitter.com/xieyihui)"
+    role = "Associate Professor, Assistant Director of the Center for Spoken Language Understanding"
+    organization = "Oregon Health & Science University (OHSU)"
+    organization_url = "http://www.ohsu.edu/xd/"
+    avatar = "aph-salt-spring-zoom.jpg"
+    email = "apresstats@gmail.com"
+    address = ""
+    office_hours = ""
+    phone = ""
+    skype = ""
+    telegram = ""
+    twitter = "apreshill"
+    github = "apreshill"
