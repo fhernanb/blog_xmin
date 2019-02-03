@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>modelo lineal simple on Freddy Hernandez</title>
+    <link>/tags/modelo-lineal-simple/</link>
+    <description>Recent content in modelo lineal simple on Freddy Hernandez</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 02 Feb 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/modelo-lineal-simple/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Simulación de modelos mixtos</title>
+      <link>/post/2019/02/02/simulaci%C3%B3n-de-modelos-mixtos/</link>
+      <pubDate>Sat, 02 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2019/02/02/simulaci%C3%B3n-de-modelos-mixtos/</guid>
+      <description>IntroducciónEn esta publicación se mostrará al lector cómo simular datos de modelos lineales y la forma de estimar los parámetros. Los modelos a simular son:
+Modelo lineal clásico,
+Modelo lineal con intercepto aleatorio,
+Modelo lineal con pendiente aleatoria,
+Modelo lineal con intercepto y pendiente aleatoria.Ilustración de un modelo mixtoSe recomienda al lector que visite el enlace mostrado abajo para que vea una ilustración muy interesante de modelos mixtos.</description>
+    </item>
+    
+  </channel>
+</rss>
