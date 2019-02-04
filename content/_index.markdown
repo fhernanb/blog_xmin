@@ -6,6 +6,6 @@ title: Home
 
 # Bienvenido al blog
 
-En esta blog usted podrá encontrar publicaciones con explicaciones cortas a temas de estadística. 
+En este blog usted podrá encontrar publicaciones con explicaciones cortas a temas de estadística. 
 
-Abajo está el listado de la últimas publicaciones. Si usted desea puede buscar publicaciones por [Temas](/categories/) o por [Palabras claves](/tags/).
+Abajo está el listado de las últimas publicaciones. Usted puede también buscar las publicaciones organizadas por [Temas](/categories/) o por [Palabras clave](/tags/).

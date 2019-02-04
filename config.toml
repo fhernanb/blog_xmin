@@ -21,7 +21,7 @@ footnotereturnlinkcontents = "↩"
     url = "/categories/"
     weight = 2
 [[menu.main]]
-    name = "Palabras claves"
+    name = "Palabras clave"
     url = "/tags/"
     weight = 3
 
