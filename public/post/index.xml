@@ -17,9 +17,8 @@
       <pubDate>Mon, 11 Feb 2019 00:00:00 +0000</pubDate>
       
       <guid>/post/2019/02/11/an%C3%A1lisis-de-componentes-principales/</guid>
-      <description>IntroducciónEn esta publicación se mostrará al lector en qué es el análisis de componentes principales, los conceptos básicos detrás de la técnica y varios ejemplos ilustrativos.
-Análisis de componentes principalesEs una herramienta para reducir el numero de variables originales por nuevas variables llamadas componentes y que son incorrelacionadas.
-</description>
+      <description>IntroducciónEn esta publicación se mostrará al lector en qué es el análisis de componentes principales, los conceptos básicos detrás de la técnica y varios ejemplos ilustrativos.
+Análisis de componentes principalesEs una herramienta para reducir el numero de variables originales por nuevas variables llamadas componentes y que son incorrelacionadas. Con esta herramienta es posible pasar de un problema de dimensión \(n \times p\), a un problema de dimensión \(n \times k\), siendo \(k &amp;lt; p\).</description>
     </item>
     
     <item>

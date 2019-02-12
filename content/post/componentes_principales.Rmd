@@ -14,7 +14,16 @@ knitr::opts_chunk$set(echo = TRUE, fig.width=6, fig.height=5)
 En esta publicación se mostrará al lector en qué es el análisis de componentes principales, los conceptos básicos detrás de la técnica y varios ejemplos ilustrativos.  
 
 ## Análisis de componentes principales
-Es una herramienta para reducir el numero de variables originales por nuevas variables llamadas componentes y que son __incorrelacionadas__.
+Es una herramienta para reducir el numero de variables originales por nuevas variables llamadas componentes y que son __incorrelacionadas__. Con esta herramienta es posible pasar de un problema de dimensión $n \times p$, a un problema de dimensión $n \times k$, siendo $k < p$. En la siguiente figura se ilustra la idea central.
+
+![Ilustración de la reducción de dimensión](/post/componentes_principales_files/reduction.png)
+
+## Objetivo
+Supongamos que se tienen $p$ variables $[X_{1}, X_{2}, \dots, X_{p}] = \boldsymbol{X}^\top$ con vector de medias $\boldsymbol{\mu}$ matriz de varianzas y covarianzas $\boldsymbol{\Sigma}$. Lo que queremos es crear $p$ combinaciones lineales a partir de las variables originales.
+
+
+
+
 
 
 
