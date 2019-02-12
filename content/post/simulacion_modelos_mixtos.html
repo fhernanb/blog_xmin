@@ -47,7 +47,7 @@ y &lt;- rnorm(n=n, mean=media, sd=sig)</code></pre>
 <pre class="r"><code>mod1 &lt;- lm(y ~ x)
 c(mod1$coef, sigma=summary(mod1)$sigma)</code></pre>
 <pre><code>## (Intercept)           x       sigma 
-##   58.853712    1.035392    1.135958</code></pre>
+##   59.065045    1.026514    1.164236</code></pre>
 <p>De la salida anterior vemos que vector de parámetros estimado está cerca de <span class="math inline">\(\boldsymbol{\Theta}=(\beta_0=59, \beta_1=1, \sigma=1)^\top\)</span>.</p>
 <p>Vamos a agregar la línea del modelo ajustado.</p>
 <pre class="r"><code>plot(y ~ x)
@@ -79,22 +79,22 @@ y &lt;- rnorm(n=n, mean=media, sd=sig)
 dt &lt;- data.frame(grupo=grupo, x=x, b0_rep, y=y)</code></pre>
 <p>Exploremos lo que hay dentro de <code>dt</code>.</p>
 <pre class="r"><code>dt[1:15, ]</code></pre>
-<pre><code>##    grupo x      b0_rep        y
-## 1      1 6 -14.3011451 50.49688
-## 2      1 3 -14.3011451 48.04676
-## 3      1 6 -14.3011451 51.76440
-## 4      1 5 -14.3011451 50.16614
-## 5      1 9 -14.3011451 53.19668
-## 6      1 6 -14.3011451 52.55359
-## 7      1 4 -14.3011451 49.97654
-## 8      1 9 -14.3011451 52.92176
-## 9      1 2 -14.3011451 46.79488
-## 10     1 7 -14.3011451 52.00765
-## 11     2 3   0.6618209 64.85568
-## 12     2 5   0.6618209 62.84498
-## 13     2 8   0.6618209 67.01058
-## 14     2 5   0.6618209 66.60096
-## 15     2 5   0.6618209 63.58368</code></pre>
+<pre><code>##    grupo x    b0_rep        y
+## 1      1 7 -3.856949 62.12391
+## 2      1 5 -3.856949 59.83155
+## 3      1 7 -3.856949 64.10604
+## 4      1 1 -3.856949 54.77058
+## 5      1 2 -3.856949 56.80584
+## 6      1 6 -3.856949 61.77064
+## 7      1 4 -3.856949 60.63573
+## 8      1 8 -3.856949 63.22431
+## 9      1 3 -3.856949 57.59284
+## 10     1 2 -3.856949 58.14539
+## 11     2 8 10.620121 78.59171
+## 12     2 3 10.620121 74.47584
+## 13     2 3 10.620121 72.21274
+## 14     2 1 10.620121 69.12996
+## 15     2 7 10.620121 76.95097</code></pre>
 <p>Vamos a construir un diagrama de dispersión para los datos simulados.</p>
 <pre class="r"><code>colores &lt;- c(&quot;#00004080&quot;, &quot;#0063FF80&quot;, &quot;#13F24080&quot;, &quot;#FFE20180&quot;, &quot;#FF330080&quot;)
 with(dt, plot(y ~ x, pch=20, col=colores[dt$grupo], cex=3))</code></pre>
@@ -106,24 +106,24 @@ summary(mod2)</code></pre>
 <pre><code>## Linear mixed-effects model fit by REML
 ##  Data: dt 
 ##        AIC      BIC    logLik
-##   181.9664 189.4512 -86.98321
+##   172.7645 180.2493 -82.38226
 ## 
 ## Random effects:
 ##  Formula: ~1 | grupo
-##         (Intercept) Residual
-## StdDev:      8.7688 1.018793
+##         (Intercept)  Residual
+## StdDev:    9.720787 0.9088912
 ## 
 ## Fixed effects: y ~ x 
 ##                Value Std.Error DF  t-value p-value
-## (Intercept) 59.34715  3.934557 44 15.08357       0
-## x            1.01209  0.061567 44 16.43881       0
+## (Intercept) 57.53547  4.356540 44 13.20669       0
+## x            1.05664  0.054364 44 19.43642       0
 ##  Correlation: 
 ##   (Intr)
-## x -0.073
+## x -0.058
 ## 
 ## Standardized Within-Group Residuals:
-##        Min         Q1        Med         Q3        Max 
-## -1.6966424 -0.6067335 -0.1268364  0.6014154  2.2638045 
+##         Min          Q1         Med          Q3         Max 
+## -1.74692042 -0.64634451 -0.05405406  0.52130632  2.26049760 
 ## 
 ## Number of Observations: 50
 ## Number of Groups: 5</code></pre>
@@ -131,24 +131,24 @@ summary(mod2)</code></pre>
 <p>Los efectos fijos estimados <span class="math inline">\(\beta_0\)</span> y <span class="math inline">\(\beta_1\)</span> se obtienen así:</p>
 <pre class="r"><code>fixef(mod2)</code></pre>
 <pre><code>## (Intercept)           x 
-##   59.347146    1.012089</code></pre>
+##   57.535467    1.056639</code></pre>
 <p>Vamos a recuperar las predicciones de los 5 interceptos aleatorios <span class="math inline">\(\tilde{b}_{0}\)</span> (efectos aleatorios) y a compararlas con los verdaderos <span class="math inline">\(b_{0}\)</span>.</p>
 <pre class="r"><code>cbind(ranef(mod2), b0)</code></pre>
-<pre><code>##   (Intercept)          b0
-## 1 -14.3042147 -14.3011451
-## 2   0.1659144   0.6618209
-## 3   6.9912967   6.9753631
-## 4  -0.1741102   0.4548594
-## 5   7.3211138   7.3097680</code></pre>
+<pre><code>##   (Intercept)         b0
+## 1   -2.387570  -3.856949
+## 2   12.125612  10.620121
+## 3    7.919930   7.080709
+## 4  -10.601242 -12.050172
+## 5   -7.056729  -7.953746</code></pre>
 <p>De la tabla anterior vemos que los <span class="math inline">\(\tilde{b_{0}}\)</span> son cercanos a los verdaderos <span class="math inline">\(b_{0}\)</span> simulados.</p>
 <p>Usando los efectos fijos y los efectos aleatorios podemos obtener las expresiones (<span class="math inline">\(\hat{\beta}_0 + \hat{\beta}_1 x_{ij} + \tilde{b}_{0i}\)</span>) para los modelos de cada grupo así:</p>
 <pre class="r"><code>coef(mod2)</code></pre>
 <pre><code>##   (Intercept)        x
-## 1    45.04293 1.012089
-## 2    59.51306 1.012089
-## 3    66.33844 1.012089
-## 4    59.17304 1.012089
-## 5    66.66826 1.012089</code></pre>
+## 1    55.14790 1.056639
+## 2    69.66108 1.056639
+## 3    65.45540 1.056639
+## 4    46.93422 1.056639
+## 5    50.47874 1.056639</code></pre>
 <p>Usando la información anterior se puede dibujar el modelo ajustado para cada grupo.</p>
 <pre class="r"><code>coef &lt;- coef(mod2)
 with(dt, plot(y ~ x, pch=20, col=colores[dt$grupo], cex=3))
@@ -181,22 +181,22 @@ y &lt;- rnorm(n=n, mean=media, sd=sig)
 dt &lt;- data.frame(grupo=grupo, x=x, b1_rep, y=y)</code></pre>
 <p>Exploremos lo que hay dentro de <code>dt</code>.</p>
 <pre class="r"><code>dt[1:15, ]</code></pre>
-<pre><code>##    grupo x      b1_rep          y
-## 1      1 2 -14.3011451  31.030310
-## 2      1 1 -14.3011451  46.581926
-## 3      1 5 -14.3011451  -7.264324
-## 4      1 2 -14.3011451  32.326831
-## 5      1 7 -14.3011451 -32.884292
-## 6      1 3 -14.3011451  19.468866
-## 7      1 6 -14.3011451 -20.562968
-## 8      1 6 -14.3011451 -20.858514
-## 9      1 3 -14.3011451  19.857991
-## 10     1 4 -14.3011451   6.156052
-## 11     2 4   0.6618209  67.019710
-## 12     2 6   0.6618209  71.407793
-## 13     2 4   0.6618209  64.887955
-## 14     2 3   0.6618209  63.827430
-## 15     2 8   0.6618209  70.759895</code></pre>
+<pre><code>##    grupo x    b1_rep         y
+## 1      1 7 -3.856949  37.97300
+## 2      1 7 -3.856949  38.88245
+## 3      1 8 -3.856949  37.46758
+## 4      1 3 -3.856949  50.61878
+## 5      1 5 -3.856949  44.51179
+## 6      1 1 -3.856949  57.02143
+## 7      1 9 -3.856949  34.13814
+## 8      1 7 -3.856949  38.87293
+## 9      1 7 -3.856949  38.08879
+## 10     1 4 -3.856949  46.01313
+## 11     2 7 10.620121 138.84155
+## 12     2 9 10.620121 165.00077
+## 13     2 5 10.620121 116.42424
+## 14     2 6 10.620121 129.38725
+## 15     2 3 10.620121  95.06025</code></pre>
 <p>Vamos a construir un diagrama de dispersión para los datos simulados.</p>
 <pre class="r"><code>with(dt, plot(y ~ x, pch=20, col=colores[dt$grupo], cex=3))</code></pre>
 <p><img src="/post/simulacion_modelos_mixtos_files/figure-html/unnamed-chunk-15-1.png" width="576" /></p>
@@ -206,47 +206,47 @@ summary(mod3)</code></pre>
 <pre><code>## Linear mixed-effects model fit by REML
 ##  Data: dt 
 ##        AIC      BIC    logLik
-##   192.3109 199.7957 -92.15547
+##   181.1266 188.6114 -86.56329
 ## 
 ## Random effects:
 ##  Formula: ~-1 + x | grupo
 ##                x  Residual
-## StdDev: 8.725345 0.9913869
+## StdDev: 9.786055 0.8508261
 ## 
 ## Fixed effects: y ~ x 
 ##                Value Std.Error DF   t-value p-value
-## (Intercept) 58.59919  0.331762 44 176.63047  0.0000
-## x            1.31767  3.902649 44   0.33764  0.7372
+## (Intercept) 59.23902  0.289253 44 204.80014  0.0000
+## x           -0.26821  4.376741 44  -0.06128  0.9514
 ##  Correlation: 
 ##   (Intr)
-## x -0.015
+## x -0.01 
 ## 
 ## Standardized Within-Group Residuals:
-##        Min         Q1        Med         Q3        Max 
-## -2.1507259 -0.5701340  0.1017573  0.6505592  2.1070700 
+##         Min          Q1         Med          Q3         Max 
+## -2.30859704 -0.68219345  0.07069069  0.66032983  2.03665552 
 ## 
 ## Number of Observations: 50
 ## Number of Groups: 5</code></pre>
 <p>Los efectos fijos estimados <span class="math inline">\(\beta_0\)</span> y <span class="math inline">\(\beta_1\)</span> se obtienen así:</p>
 <pre class="r"><code>fixef(mod3)</code></pre>
 <pre><code>## (Intercept)           x 
-##   58.599194    1.317672</code></pre>
+##  59.2390176  -0.2682098</code></pre>
 <p>Vamos a recuperar las predicciones de las 5 pendientes aleatorios (efectos aleatorios) y a compararlas con los verdaderos <span class="math inline">\(b_{1}\)</span>.</p>
 <pre class="r"><code>cbind(ranef(mod3), b1)</code></pre>
-<pre><code>##             x        b1
-## 1 -14.4622299  4.678836
-## 2   0.4689409  0.572143
-## 3   6.6865811 -9.446713
-## 4   0.2087575 -6.943761
-## 5   7.0979504  7.793442</code></pre>
+<pre><code>##            x        b1
+## 1  -2.631407  8.420832
+## 2  11.920602 -3.722361
+## 3   8.360706  6.974374
+## 4 -10.871023 16.547286
+## 5  -6.778877  2.490996</code></pre>
 <p>Usando los efectos fijos y los efectos aleatorios podemos obtener las expresiones (<span class="math inline">\(\hat{\beta}_0 + \hat{\beta}_1 x_{ij} + b_{1i} x_{ij}\)</span>) para los modelos de cada grupo así:</p>
 <pre class="r"><code>coef(mod3)</code></pre>
 <pre><code>##   (Intercept)          x
-## 1    58.59919 -13.144558
-## 2    58.59919   1.786613
-## 3    58.59919   8.004253
-## 4    58.59919   1.526429
-## 5    58.59919   8.415622</code></pre>
+## 1    59.23902  -2.899617
+## 2    59.23902  11.652392
+## 3    59.23902   8.092496
+## 4    59.23902 -11.139233
+## 5    59.23902  -7.047087</code></pre>
 <p>Usando la información anterior se puede dibujar el modelo ajustado para cada grupo.</p>
 <pre class="r"><code>coef &lt;- coef(mod3)
 with(dt, plot(y ~ x, pch=20, col=colores[dt$grupo], cex=3))
@@ -296,22 +296,22 @@ y &lt;- rnorm(n=n, mean=media, sd=sig)
 dt &lt;- data.frame(grupo=grupo, x=x, b0=b_rep[, 1], b1=b_rep[, 2], y=y)</code></pre>
 <p>Exploremos lo que hay dentro de <code>dt</code>.</p>
 <pre class="r"><code>dt[1:15, ]</code></pre>
-<pre><code>##    grupo x         b0         b1        y
-## 1      1 3  0.3066084 -0.8283391 58.05302
-## 2      1 2  0.3066084 -0.8283391 58.08500
-## 3      1 5  0.3066084 -0.8283391 61.39111
-## 4      1 7  0.3066084 -0.8283391 59.57265
-## 5      1 6  0.3066084 -0.8283391 62.17486
-## 6      1 9  0.3066084 -0.8283391 60.82384
-## 7      1 5  0.3066084 -0.8283391 60.58847
-## 8      1 7  0.3066084 -0.8283391 60.33964
-## 9      1 5  0.3066084 -0.8283391 60.04339
-## 10     1 4  0.3066084 -0.8283391 60.53404
-## 11     2 6 -9.3166897 -2.0673659 42.74905
-## 12     2 7 -9.3166897 -2.0673659 42.42815
-## 13     2 7 -9.3166897 -2.0673659 42.98697
-## 14     2 4 -9.3166897 -2.0673659 44.10553
-## 15     2 2 -9.3166897 -2.0673659 48.25088</code></pre>
+<pre><code>##    grupo x        b0         b1         y
+## 1      1 3 -3.449279 -0.6583802  55.38341
+## 2      1 7 -3.449279 -0.6583802  56.91599
+## 3      1 1 -3.449279 -0.6583802  55.30377
+## 4      1 6 -3.449279 -0.6583802  58.23284
+## 5      1 8 -3.449279 -0.6583802  59.93656
+## 6      1 3 -3.449279 -0.6583802  57.36730
+## 7      1 3 -3.449279 -0.6583802  54.71003
+## 8      1 9 -3.449279 -0.6583802  58.74832
+## 9      1 4 -3.449279 -0.6583802  55.86439
+## 10     1 2 -3.449279 -0.6583802  56.52103
+## 11     2 2 -1.818460  6.6868889  73.89033
+## 12     2 2 -1.818460  6.6868889  70.75150
+## 13     2 4 -1.818460  6.6868889  85.77639
+## 14     2 1 -1.818460  6.6868889  63.61430
+## 15     2 7 -1.818460  6.6868889 111.20002</code></pre>
 <p>Vamos a construir un diagrama de dispersión para los datos simulados.</p>
 <pre class="r"><code>with(dt, plot(y ~ x, pch=20, col=colores[dt$grupo], cex=3))</code></pre>
 <p><img src="/post/simulacion_modelos_mixtos_files/figure-html/unnamed-chunk-23-1.png" width="576" /></p>
@@ -320,28 +320,28 @@ dt &lt;- data.frame(grupo=grupo, x=x, b0=b_rep[, 1], b1=b_rep[, 2], y=y)</code><
 summary(mod4)</code></pre>
 <pre><code>## Linear mixed-effects model fit by REML
 ##  Data: dt 
-##       AIC      BIC   logLik
-##   210.035 221.2622 -99.0175
+##        AIC      BIC    logLik
+##   219.5636 230.7908 -103.7818
 ## 
 ## Random effects:
 ##  Formula: ~1 + x | grupo
 ##  Structure: General positive-definite, Log-Cholesky parametrization
-##             StdDev   Corr  
-## (Intercept) 9.143604 (Intr)
-## x           3.418167 -0.313
-## Residual    1.011080       
+##             StdDev    Corr  
+## (Intercept) 10.557544 (Intr)
+## x            3.218488 0.265 
+## Residual     1.100099       
 ## 
 ## Fixed effects: y ~ x 
-##                Value Std.Error DF   t-value p-value
-## (Intercept) 55.67945  4.106801 44 13.557863  0.0000
-## x            2.05814  1.530148 44  1.345057  0.1855
+##                Value Std.Error DF  t-value p-value
+## (Intercept) 61.59155  4.731550 44 13.01720  0.0000
+## x            3.22077  1.440697 44  2.23556  0.0305
 ##  Correlation: 
 ##   (Intr)
-## x -0.315
+## x 0.261 
 ## 
 ## Standardized Within-Group Residuals:
 ##        Min         Q1        Med         Q3        Max 
-## -2.7683090 -0.5329902  0.1049739  0.5291082  1.7368595 
+## -1.7859541 -0.6709896  0.0694723  0.5415051  2.4195933 
 ## 
 ## Number of Observations: 50
 ## Number of Groups: 5</code></pre>
