@@ -1,0 +1,20 @@
+---
+title: "Análisis de componentes principales"
+author: "Freddy Hernández"
+date: '`r format(Sys.Date())`'
+categories: ["Análisis multivariado"]
+tags: ["Componentes principales"]
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, fig.width=6, fig.height=5)
+```
+
+## Introducción
+En esta publicación se mostrará al lector en qué es el análisis de componentes principales, los conceptos básicos detrás de la técnica y varios ejemplos ilustrativos.  
+
+## Análisis de componentes principales
+Es una herramienta para reducir el numero de variables originales por nuevas variables llamadas componentes y que son __incorrelacionadas__.
+
+
+
