@@ -100,4 +100,4 @@ abline(v=num/C, lty='dashed', col='blue3')
 De este ejercicio se puede concluir que, dada una muestra de tamaño unitario con valor de $x=3$, la media de la distribución a posterior de $\theta$ es igual a `r num/C`.
 
 ## Reto
-Responder las dos mismas preguntas iniciales pero suponiendo que se tiene ahora una muestra aleatoria de tamaño tres $\boldsymbol{x}=\left(3, 2.5, 5.3 \right)$.
+Responder las dos mismas preguntas iniciales pero suponiendo que se tiene ahora una muestra aleatoria de tamaño tres como esta $\boldsymbol{x}=\left(3, 2.5, 5.3 \right)$.

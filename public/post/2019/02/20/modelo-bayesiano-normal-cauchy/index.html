@@ -73,8 +73,8 @@ thetas &lt;- rcauchy(n=m, location=0, scale=1)
 aux1 &lt;- dnorm(x=x, mean=thetas, sd=1)
 C &lt;- mean(aux1)
 C</code></pre>
-<pre><code>## [1] 0.04346854</code></pre>
-<p>De la salida anterior vemos que <span class="math inline">\(C= 0.0434685\)</span>. Usando esta información es posible crear la distribución a posteriori de la siguiente manera.</p>
+<pre><code>## [1] 0.04324132</code></pre>
+<p>De la salida anterior vemos que <span class="math inline">\(C= 0.0432413\)</span>. Usando esta información es posible crear la distribución a posteriori de la siguiente manera.</p>
 <pre class="r"><code>posterior &lt;- function(theta) 
   dnorm(x=x, mean=theta, sd=1) * dcauchy(x=theta, location=0, scale=1) / C</code></pre>
 <p>En la siguiente figura se muestra la forma de la distribución a posteriori <span class="math inline">\(p(\theta|x)\)</span>.</p>
@@ -83,14 +83,14 @@ C</code></pre>
 <pre class="r"><code>aux2 &lt;- thetas * dnorm(x=x, mean=thetas, sd=1)
 num &lt;- mean(aux2)
 num/C                # To obtain the posterior mean</code></pre>
-<pre><code>## [1] 2.289123</code></pre>
-<p>Del resultado anterior tenemos que <span class="math inline">\(E(\theta | datos) = 2.2891229\)</span>. En la siguiente figura se muestra la distribución a posteriori, la única observación <span class="math inline">\(x=3\)</span> (punto en color rojo) y la media de la distribución a posteriori (línea azul a trazos).</p>
+<pre><code>## [1] 2.284967</code></pre>
+<p>Del resultado anterior tenemos que <span class="math inline">\(E(\theta | datos) = 2.284967\)</span>. En la siguiente figura se muestra la distribución a posteriori, la única observación <span class="math inline">\(x=3\)</span> (punto en color rojo) y la media de la distribución a posteriori (línea azul a trazos).</p>
 <p><img src="/post/normal-cauchy-bayes_files/figure-html/post_norm_cauchy_con_media-1.png" width="576" /></p>
-<p>De este ejercicio se puede concluir que, dada una muestra de tamaño unitario con valor de <span class="math inline">\(x=3\)</span>, la media de la distribución a posterior de <span class="math inline">\(\theta\)</span> es igual a 2.2891229.</p>
+<p>De este ejercicio se puede concluir que, dada una muestra de tamaño unitario con valor de <span class="math inline">\(x=3\)</span>, la media de la distribución a posterior de <span class="math inline">\(\theta\)</span> es igual a 2.284967.</p>
 </div>
 <div id="reto" class="section level2">
 <h2>Reto</h2>
-<p>Responder las dos mismas preguntas iniciales pero suponiendo que se tiene ahora una muestra aleatoria de tamaño tres <span class="math inline">\(\boldsymbol{x}=\left(3, 2.5, 5.3 \right)\)</span>.</p>
+<p>Responder las dos mismas preguntas iniciales pero suponiendo que se tiene ahora una muestra aleatoria de tamaño tres como esta <span class="math inline">\(\boldsymbol{x}=\left(3, 2.5, 5.3 \right)\)</span>.</p>
 </div>
 
 </main>
