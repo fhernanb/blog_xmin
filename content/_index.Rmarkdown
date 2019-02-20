@@ -2,7 +2,7 @@
 title: Home
 ---
 
-[<img src="https://fhernanb.github.io/docs/logo_unal_negro.png" style="max-width:25%;min-width:40px;float:right;" alt="logo unal" />](https://github.com/yihui/hugo-xmin)
+[<img src="https://fhernanb.github.io/docs/logo_unal_negro.png" style="max-width:25%;min-width:40px;float:right;" alt="logo unal" />](http://ciencias.medellin.unal.edu.co/escuelas/estadistica/)
 
 # Bienvenido al blog
 
