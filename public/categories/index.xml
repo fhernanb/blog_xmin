@@ -6,7 +6,7 @@
     <description>Recent content in Categories on Blog de Freddy</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 11 Feb 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 20 Feb 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,16 +14,25 @@
     <item>
       <title>Análisis multivariado</title>
       <link>/categories/an%C3%A1lisis-multivariado/</link>
-      <pubDate>Mon, 11 Feb 2019 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 20 Feb 2019 00:00:00 +0000</pubDate>
       
       <guid>/categories/an%C3%A1lisis-multivariado/</guid>
       <description></description>
     </item>
     
     <item>
+      <title>Bayesiana</title>
+      <link>/categories/bayesiana/</link>
+      <pubDate>Wed, 20 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/bayesiana/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Simulación</title>
       <link>/categories/simulaci%C3%B3n/</link>
-      <pubDate>Mon, 11 Feb 2019 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 20 Feb 2019 00:00:00 +0000</pubDate>
       
       <guid>/categories/simulaci%C3%B3n/</guid>
       <description></description>

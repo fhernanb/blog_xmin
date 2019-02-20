@@ -6,27 +6,37 @@
     <description>Recent content in Posts on Blog de Freddy</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 11 Feb 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 20 Feb 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Análisis de componentes principales</title>
-      <link>/post/2019/02/11/an%C3%A1lisis-de-componentes-principales/</link>
-      <pubDate>Mon, 11 Feb 2019 00:00:00 +0000</pubDate>
+      <link>/post/2019/02/20/an%C3%A1lisis-de-componentes-principales/</link>
+      <pubDate>Wed, 20 Feb 2019 00:00:00 +0000</pubDate>
       
-      <guid>/post/2019/02/11/an%C3%A1lisis-de-componentes-principales/</guid>
+      <guid>/post/2019/02/20/an%C3%A1lisis-de-componentes-principales/</guid>
       <description>IntroducciónEn esta publicación se mostrará al lector en qué es el análisis de componentes principales, los conceptos básicos detrás de la técnica y varios ejemplos ilustrativos.
 Análisis de componentes principalesEs una herramienta para reducir el numero de variables originales por nuevas variables llamadas componentes y que son incorrelacionadas. Con esta herramienta es posible pasar de un problema de dimensión \(n \times p\), a un problema de dimensión \(n \times k\), siendo \(k &amp;lt; p\).</description>
     </item>
     
     <item>
-      <title>Simulación de modelos mixtos</title>
-      <link>/post/2019/02/11/simulaci%C3%B3n-de-modelos-mixtos/</link>
-      <pubDate>Mon, 11 Feb 2019 00:00:00 +0000</pubDate>
+      <title>Modelo bayesiano normal-Cauchy</title>
+      <link>/post/2019/02/20/modelo-bayesiano-normal-cauchy/</link>
+      <pubDate>Wed, 20 Feb 2019 00:00:00 +0000</pubDate>
       
-      <guid>/post/2019/02/11/simulaci%C3%B3n-de-modelos-mixtos/</guid>
+      <guid>/post/2019/02/20/modelo-bayesiano-normal-cauchy/</guid>
+      <description>IntroducciónEn esta publicación se mostrará al lector la forma de implementar el modelo bayesiano normal-Cauchy. Este modelo está inspirado en el ejercicio propuesto 3.1 del libro Introducing Monte Carlo Methods with R.
+ModeloSuponga que tenemos una sola observación \(x=3\) de una población con distribución \(N(\theta, 1)\) y que lo queremos es estimar la media \(\theta\) de esa población. Suponga también que tenemos sospechas de que el parámetro \(\theta\) varía según una distribución \(Cauchy(l=0, s=1)\).</description>
+    </item>
+    
+    <item>
+      <title>Simulación de modelos mixtos</title>
+      <link>/post/2019/02/20/simulaci%C3%B3n-de-modelos-mixtos/</link>
+      <pubDate>Wed, 20 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2019/02/20/simulaci%C3%B3n-de-modelos-mixtos/</guid>
       <description>IntroducciónEn esta publicación se mostrará al lector cómo simular datos de un modelo lineal (sin y con efectos aleatorios) y la forma de estimar los parámetros. Los modelos a considerar son:
 Modelo lineal clásico,
 Modelo lineal con intercepto aleatorio,

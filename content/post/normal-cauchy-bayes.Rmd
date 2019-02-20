@@ -1,0 +1,103 @@
+---
+title: "Modelo bayesiano normal-Cauchy"
+author: "Freddy Hernández"
+date: '`r format(Sys.Date())`'
+categories: ["Bayesiana"]
+tags: ["normal", "Cauchy"]
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, fig.width=6, fig.height=5)
+```
+
+## Introducción
+En esta publicación se mostrará al lector la forma de implementar el modelo bayesiano normal-Cauchy. Este modelo está inspirado en el ejercicio propuesto 3.1 del libro [Introducing Monte Carlo Methods with R](https://www.springer.com/fr/book/9781441915757).
+
+## Modelo
+Suponga que tenemos __una sola__ observación $x=3$ de una población con distribución $N(\theta, 1)$ y que lo queremos es estimar la media $\theta$ de esa población. Suponga también que tenemos sospechas de que el parámetro $\theta$ varía según una distribución $Cauchy(l=0, s=1)$.
+
+Queremos responder las siguientes preguntas:
+
+1. ¿Cómo es la distribución a posteriori de $\theta$?
+2. ¿Cuál es la media de la distribución a posteriori de $\theta$?
+
+## Distribuciones involucradas
+En este problema tenemos la verosimilitud $p(x|\theta)$ basada en una sola observación, la cual se escribe como:
+
+$$p(x|\theta) = \frac{1}{\sqrt{{2 \pi}}} \exp \left( \frac{-(x-\theta)^2}{2}  \right)$$
+
+La distribución a priori $p(\theta)$ del parámetro $\theta$ se escribe como:
+
+$$p(\theta) = \frac{1}{\pi (1+\theta^2)}$$
+
+La distribución a posteriori $p(\theta|x)$ de $\theta$ es la siguiente:
+
+$$p(\theta|x) \propto p(x|\theta) \, p(\theta)$$
+
+El símbolo de proporcionalidad se debe a que el lado derecho de la expresión anterior __NO__ es una función de densidad a cabalidad, se debe dividir entre una constante $C$ para convertirla en una función de densidad. La constante $C$ se calcula como:
+
+$$C = \int_{-\infty}^{\infty} p(x|\theta) \, p(\theta) d \theta$$
+
+Una vez se tenga la constante $C$ se puede escribir la distribución a posteriori de la siguiente manera:
+
+$$p(\theta|x) = \frac{p(x|\theta) \, p(\theta)}{C}$$
+
+La media de la distribución a posteriori $E(\theta | datos)$ se calcula como:
+
+$$E(\theta | datos) = \frac{\int_{-\infty}^{\infty} \theta \, p(x|\theta) \, p(\theta) d \theta}{C}$$
+
+Note que la integral del denominador anterior involucra a $\theta$, mientras que la integral usada para obtener a $C$ no tiene a $\theta$.
+
+## Calculando lo solicitado en R
+A continuación se muestra cómo usar simulación de Monte Carlo para responder las dos preguntas iniciales.
+
+Lo primero es definir los datos, en este caso una sola observación.
+```{r}
+x <- 3
+```
+
+Para obtener la constante $C$ vamos a calcular la integral por medio de simulación de Monte Carlo, generaremos $m=10000$ valores $\theta_k$ provenientes de la distribución a priori, luego vamos a evaluar $p(x|\theta_k)$ y por último vamos a promediar esos valores para obtener a $C$. A continuación del código a usar.
+
+```{r}
+m <- 100000  # number of simulated values
+thetas <- rcauchy(n=m, location=0, scale=1)
+aux1 <- dnorm(x=x, mean=thetas, sd=1)
+C <- mean(aux1)
+C
+```
+
+De la salida anterior vemos que $C= `r C`$. Usando esta información es posible crear la distribución a posteriori de la siguiente manera.
+
+```{r}
+posterior <- function(theta) 
+  dnorm(x=x, mean=theta, sd=1) * dcauchy(x=theta, location=0, scale=1) / C
+```
+
+En la siguiente figura se muestra la forma de la distribución a posteriori $p(\theta|x)$.
+
+```{r, post_norm_cauchy, echo=FALSE}
+curve(posterior, from=-6, to=6, 
+      xlab=expression(theta), ylab=expression(p(theta ~ "| x")))
+```
+
+Para obtener la media de $p(\theta|x)$ se debe calcular $\int_{-\infty}^{\infty} \theta \,p(x|\theta) \, p(\theta) d \theta$ y luego dividir entre $C$. Para obtener el numerador vamos a reciclar los valores simulados `thetas`, a continuación el código para hacerlo.
+
+```{r}
+aux2 <- thetas * dnorm(x=x, mean=thetas, sd=1)
+num <- mean(aux2)
+num/C                # To obtain the posterior mean
+```
+
+Del resultado anterior tenemos que $E(\theta | datos) = `r num/C`$. En la siguiente figura se muestra la distribución a posteriori, la única observación $x=3$ (punto en color rojo) y la media de la distribución a posteriori (línea azul a trazos). 
+
+```{r, post_norm_cauchy_con_media, echo=FALSE}
+curve(posterior, from=-6, to=6, 
+      xlab=expression(theta), ylab=expression(p(theta ~ "| x")))
+points(x=x, y=0, pch=19, col='tomato', cex=1.5)
+abline(v=num/C, lty='dashed', col='blue3')
+```
+
+De este ejercicio se puede concluir que, dada una muestra de tamaño unitario con valor de $x=3$, la media de la distribución a posterior de $\theta$ es igual a `r num/C`.
+
+## Reto
+Responder las dos mismas preguntas iniciales pero suponiendo que se tiene ahora una muestra aleatoria de tamaño tres $\boldsymbol{x}=\left(3, 2.5, 5.3 \right)$.

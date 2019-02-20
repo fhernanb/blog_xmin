@@ -6,15 +6,24 @@
     <description>Recent content in Tags on Blog de Freddy</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 11 Feb 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 20 Feb 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>Cauchy</title>
+      <link>/tags/cauchy/</link>
+      <pubDate>Wed, 20 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/cauchy/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Componentes principales</title>
       <link>/tags/componentes-principales/</link>
-      <pubDate>Mon, 11 Feb 2019 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 20 Feb 2019 00:00:00 +0000</pubDate>
       
       <guid>/tags/componentes-principales/</guid>
       <description></description>
@@ -23,7 +32,7 @@
     <item>
       <title>modelo lineal simple</title>
       <link>/tags/modelo-lineal-simple/</link>
-      <pubDate>Mon, 11 Feb 2019 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 20 Feb 2019 00:00:00 +0000</pubDate>
       
       <guid>/tags/modelo-lineal-simple/</guid>
       <description></description>
@@ -32,9 +41,18 @@
     <item>
       <title>modelo mixto</title>
       <link>/tags/modelo-mixto/</link>
-      <pubDate>Mon, 11 Feb 2019 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 20 Feb 2019 00:00:00 +0000</pubDate>
       
       <guid>/tags/modelo-mixto/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>normal</title>
+      <link>/tags/normal/</link>
+      <pubDate>Wed, 20 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/normal/</guid>
       <description></description>
     </item>
     
