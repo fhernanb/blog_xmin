@@ -1,7 +1,7 @@
 ---
 title: "Simulación de modelos mixtos"
 author: "Freddy Hernández"
-date: '`r format(Sys.Date())`'
+date: '2019-01-15'
 categories: ["Simulación"]
 tags: ["modelo lineal simple", "modelo mixto"]
 ---

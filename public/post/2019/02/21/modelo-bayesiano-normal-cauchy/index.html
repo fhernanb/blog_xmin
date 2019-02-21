@@ -26,7 +26,7 @@
 <div class="article-meta">
 <h1><span class="title">Modelo bayesiano normal-Cauchy</span></h1>
 <h2 class="author">Freddy Hernández</h2>
-<h2 class="date">2019/02/20</h2>
+<h2 class="date">2019/02/21</h2>
 </div>
 
 <main>
@@ -60,7 +60,7 @@
 <p><span class="math display">\[p(\theta|x) = \frac{p(x|\theta) \, p(\theta)}{C}\]</span></p>
 <p>La media de la distribución a posteriori <span class="math inline">\(E(\theta | datos)\)</span> se calcula como:</p>
 <p><span class="math display">\[E(\theta | datos) = \frac{\int_{-\infty}^{\infty} \theta \, p(x|\theta) \, p(\theta) d \theta}{C}\]</span></p>
-<p>Note que la integral del denominador anterior involucra a <span class="math inline">\(\theta\)</span>, mientras que la integral usada para obtener a <span class="math inline">\(C\)</span> no tiene a <span class="math inline">\(\theta\)</span>.</p>
+<p>Note que la integral del numerador anterior involucra a <span class="math inline">\(\theta\)</span>, mientras que la integral usada para obtener a <span class="math inline">\(C\)</span> no tiene a <span class="math inline">\(\theta\)</span>.</p>
 </div>
 <div id="calculando-lo-solicitado-en-r" class="section level2">
 <h2>Calculando lo solicitado en R</h2>
@@ -73,8 +73,8 @@ thetas &lt;- rcauchy(n=m, location=0, scale=1)
 aux1 &lt;- dnorm(x=x, mean=thetas, sd=1)
 C &lt;- mean(aux1)
 C</code></pre>
-<pre><code>## [1] 0.04315865</code></pre>
-<p>De la salida anterior vemos que <span class="math inline">\(C= 0.0431587\)</span>. Usando esta información es posible crear la distribución a posteriori de la siguiente manera.</p>
+<pre><code>## [1] 0.04382918</code></pre>
+<p>De la salida anterior vemos que <span class="math inline">\(C= 0.0438292\)</span>. Usando esta información es posible crear la distribución a posteriori de la siguiente manera.</p>
 <pre class="r"><code>posterior &lt;- function(theta) 
   dnorm(x=x, mean=theta, sd=1) * dcauchy(x=theta, location=0, scale=1) / C</code></pre>
 <p>En la siguiente figura se muestra la forma de la distribución a posteriori <span class="math inline">\(p(\theta|x)\)</span>.</p>
@@ -83,10 +83,10 @@ C</code></pre>
 <pre class="r"><code>aux2 &lt;- thetas * dnorm(x=x, mean=thetas, sd=1)
 num &lt;- mean(aux2)
 num/C                # To obtain the posterior mean</code></pre>
-<pre><code>## [1] 2.29059</code></pre>
-<p>Del resultado anterior tenemos que <span class="math inline">\(E(\theta | datos) = 2.2905896\)</span>. En la siguiente figura se muestra la distribución a posteriori, la única observación <span class="math inline">\(x=3\)</span> (punto en color rojo) y la media de la distribución a posteriori (línea azul a trazos).</p>
+<pre><code>## [1] 2.293186</code></pre>
+<p>Del resultado anterior tenemos que <span class="math inline">\(E(\theta | datos) = 2.2931859\)</span>. En la siguiente figura se muestra la distribución a posteriori, la única observación <span class="math inline">\(x=3\)</span> (punto en color rojo) y la media de la distribución a posteriori (línea azul a trazos).</p>
 <p><img src="/post/normal-cauchy-bayes_files/figure-html/post_norm_cauchy_con_media-1.png" width="576" /></p>
-<p>De este ejercicio se puede concluir que, dada una muestra de tamaño unitario con valor de <span class="math inline">\(x=3\)</span>, la media de la distribución a posterior de <span class="math inline">\(\theta\)</span> es igual a 2.2905896.</p>
+<p>De este ejercicio se puede concluir que, dada una muestra de tamaño unitario con valor de <span class="math inline">\(x=3\)</span>, la media de la distribución a posterior de <span class="math inline">\(\theta\)</span> es igual a 2.2931859.</p>
 </div>
 <div id="reto" class="section level2">
 <h2>Reto</h2>

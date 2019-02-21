@@ -1,7 +1,7 @@
 ---
 title: "Modelo bayesiano normal-Cauchy"
 author: "Freddy Hernández"
-date: '`r format(Sys.Date())`'
+date: '2019-02-21'
 categories: ["Bayesiana"]
 tags: ["normal", "Cauchy"]
 ---
@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = TRUE, fig.width=6, fig.height=5)
 ```
 
 ## Introducción
-En esta publicación se mostrará al lector la forma de implementar el modelo bayesiano normal-Cauchy. Este modelo está inspirado en el ejercicio propuesto 3.1 del libro [Introducing Monte Carlo Methods with R](https://www.springer.com/fr/book/9781441915757).
+En esta publicación se mostrará al lector la forma de implementar el modelo bayesiano normal-Cauchy. Este modelo está basado en el ejercicio propuesto 3.1 del libro [Introducing Monte Carlo Methods with R](https://www.springer.com/fr/book/9781441915757).
 
 ## Modelo
 Suponga que tenemos __una sola__ observación $x=3$ de una población con distribución $N(\theta, 1)$ y que lo queremos es estimar la media $\theta$ de esa población. Suponga también que tenemos sospechas de que el parámetro $\theta$ varía según una distribución $Cauchy(l=0, s=1)$.
@@ -46,7 +46,7 @@ La media de la distribución a posteriori $E(\theta | datos)$ se calcula como:
 
 $$E(\theta | datos) = \frac{\int_{-\infty}^{\infty} \theta \, p(x|\theta) \, p(\theta) d \theta}{C}$$
 
-Note que la integral del denominador anterior involucra a $\theta$, mientras que la integral usada para obtener a $C$ no tiene a $\theta$.
+Note que la integral del numerador anterior involucra a $\theta$, mientras que la integral usada para obtener a $C$ no tiene a $\theta$.
 
 ## Calculando lo solicitado en R
 A continuación se muestra cómo usar simulación de Monte Carlo para responder las dos preguntas iniciales.
