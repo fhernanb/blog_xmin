@@ -11,6 +11,117 @@ knitr::opts_chunk$set(echo = TRUE, fig.width=6, fig.height=5)
 ```
 
 ## Introducción
-En esta publicación se mostrará al lector la forma de implementar el modelo bayesiano normal-Cauchy. Este modelo está basado en el ejercicio propuesto 3.1 del libro [Introducing Monte Carlo Methods with R](https://www.springer.com/fr/book/9781441915757).
+En esta publicación se mostrará como usar redes neuronales para predecir el valor de una variable $Y$ en función de una sola covariable $X$ usando redes neuronales por medio del paquete `neuralnet`.
+
+## Los datos
+En esta publicación vamos a usar los datos del ejemplo 2.1 del libro de [Montgomery, Peck and Vining (2003)](https://www.amazon.com/Introduccion-analisis-regresion-lineal-Spanish/dp/9702403278). En el ejemplo 2.1 los autores ajustaron un modelo de regresión lineal simple para explicar la Resistencia de una soldadura en función de la Edad de la misma. A continuación una figura ilustrativa del problema.
+
+![](/post/neuralnet01_files/soldador.png)
+
+
+A continuación el código para cargar los datos y una muestra de las 6 primeras observaciones de la base de datos.
+
+```{r}
+file <- "https://raw.githubusercontent.com/fhernanb/datos/master/propelente"
+datos <- read.table(file=file, header=TRUE)
+head(datos) # shows the first 6 rows
+```
+
+Para crear un diagrama de dispersión que nos muestre la relación entre las dos variables usamos las siguientes instrucciones.
+
+```{r message=FALSE}
+library(ggplot2)
+ggplot(datos, aes(x=Edad, y=Resistencia)) + geom_point()
+```
+
+## Paquete `neuralnet`
+En este ejemplo vamos a usar la función `neuralnet` del paquete `neuralnet` para crear la red neuronal. La función `neuralnet` tiene la siguiente estructura.
+
+```{r, eval=FALSE}
+neuralnet(formula, data, hidden = 1, threshold = 0.01,
+  stepmax = 1e+05, rep = 1, startweights = NULL,
+  learningrate.limit = NULL, learningrate.factor = list(minus = 0.5,
+  plus = 1.2), learningrate = NULL, lifesign = "none",
+  lifesign.step = 1000, algorithm = "rprop+", err.fct = "sse",
+  act.fct = "logistic", linear.output = TRUE, exclude = NULL,
+  constant.weights = NULL, likelihood = FALSE)
+```
+
+Para conocer en detalle la función se recomienda al lector escribir en la consola de R `help(neuralnet)`.
+
+## Creando la red neuronal
+Antes de crear la red es necesario escalar las variables para evitar el efecto de la escala de las variables. Existen varias formas de escalar pero aquí vamos a usar una transformación para pasar los valores de las variables al intervalo $(0, 1)$.
+
+Con el siguiente código vamos a convertir los datos originales del objeto `datos` a los datos escalados y se almacenarán en el objeto `scaled`.
+
+```{r}
+maxs <- apply(datos, 2, max) 
+mins <- apply(datos, 2, min)
+scaled <- as.data.frame(scale(datos, center=mins, scale=maxs - mins))
+```
+
+Para comparar los datos originales con los datos escalados podemos usar el siguiente código.
+
+```{r}
+cbind(datos, scaled)[1:5, ]
+```
+
+Next figure shows the scatterplot for the scaled data, the form remains.
+
+```{r}
+ggplot(scaled, aes(x=Edad, y=Resistencia)) + geom_point()
+```
+
+The first model `mod1` to consider has one layer with one node inside. 
+
+```{r}
+library(neuralnet)
+mod1 <- neuralnet(Resistencia ~ Edad, data=scaled, 
+                  hidden=c(1), threshold=0.01)
+```
+
+We could plot the model using:
+
+```{r}
+plot(mod1, rep="best")
+```
+
+The second model `mod2` has two layers, the first one with 2 nodes and the second with 3 nodes. 
+```{r}
+mod2 <- neuralnet(Resistencia ~ Edad, data=scaled, 
+                  hidden=c(2, 3), threshold=0.01)
+```
+
+We could plot the model using:
+
+```{r}
+plot(mod2, rep="best")
+```
+
+Because the `mod2` has the lowest **Error** we will use this model as final model.
+
+# Prediction
+In this example we have only `r dim(datos)[1]`, for this reason we did not split the original data in train and test data. Suppose that original, train and test data are the same.
+
+Next is the code to create a data frame with the feature Edad from the scaled data. The `compute` function can be used to obtain the predict response for a given test dataset.
+
+```{r}
+test <- data.frame(Edad = scaled[, 2])
+myprediction <- compute(x=mod2, covariate=test)
+```
+
+The element `$net.result` from `myprediction` object has the $\hat{y}$ or estimated responses but in a scaled form, for this reason we need to apply the inverse transformation to obtain $\hat{y}$.
+
+```{r}
+yhat <- myprediction$net.result * (max(datos$Resistencia)-min(datos$Resistencia))+min(datos$Resistencia)
+datos$yhat <- yhat
+```
+
+We can plot the observed $y$ from test dataset versus $\hat{y}$.
+
+```{r}
+ggplot(datos, aes(x=Resistencia, y=yhat)) + geom_point() +
+  geom_abline(intercept=0, slope=1, color="blue", linetype="dashed", size=1.5)
+```
 
 

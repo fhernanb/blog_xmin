@@ -27,8 +27,8 @@
       <pubDate>Thu, 21 Feb 2019 00:00:00 +0000</pubDate>
       
       <guid>/post/2019/02/21/redes-neuronales-con-neuralnet/</guid>
-      <description>IntroducciónEn esta publicación se mostrará al lector la forma de implementar el modelo bayesiano normal-Cauchy. Este modelo está basado en el ejercicio propuesto 3.1 del libro Introducing Monte Carlo Methods with R.
-</description>
+      <description>IntroducciónEn esta publicación se mostrará como usar redes neuronales para predecir el valor de una variable \(Y\) en función de una sola covariable \(X\) usando redes neuronales por medio del paquete neuralnet.
+Los datosEn esta publicación vamos a usar los datos del ejemplo 2.1 del libro de Montgomery, Peck and Vining (2003). En el ejemplo 2.1 los autores ajustaron un modelo de regresión lineal simple para explicar la Resistencia de una soldadura en función de la Edad de la misma.</description>
     </item>
     
     <item>

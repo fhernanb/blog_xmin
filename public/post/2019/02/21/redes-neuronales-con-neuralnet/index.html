@@ -35,7 +35,86 @@
 
 <div id="introduccion" class="section level2">
 <h2>Introducción</h2>
-<p>En esta publicación se mostrará al lector la forma de implementar el modelo bayesiano normal-Cauchy. Este modelo está basado en el ejercicio propuesto 3.1 del libro <a href="https://www.springer.com/fr/book/9781441915757">Introducing Monte Carlo Methods with R</a>.</p>
+<p>En esta publicación se mostrará como usar redes neuronales para predecir el valor de una variable <span class="math inline">\(Y\)</span> en función de una sola covariable <span class="math inline">\(X\)</span> usando redes neuronales por medio del paquete <code>neuralnet</code>.</p>
+</div>
+<div id="los-datos" class="section level2">
+<h2>Los datos</h2>
+<p>En esta publicación vamos a usar los datos del ejemplo 2.1 del libro de <a href="https://www.amazon.com/Introduccion-analisis-regresion-lineal-Spanish/dp/9702403278">Montgomery, Peck and Vining (2003)</a>. En el ejemplo 2.1 los autores ajustaron un modelo de regresión lineal simple para explicar la Resistencia de una soldadura en función de la Edad de la misma. A continuación una figura ilustrativa del problema.</p>
+<p><img src="/post/neuralnet01_files/soldador.png" /></p>
+<p>A continuación el código para cargar los datos y una muestra de las 6 primeras observaciones de la base de datos.</p>
+<pre class="r"><code>file &lt;- &quot;https://raw.githubusercontent.com/fhernanb/datos/master/propelente&quot;
+datos &lt;- read.table(file=file, header=TRUE)
+head(datos) # shows the first 6 rows</code></pre>
+<pre><code>##   Resistencia  Edad
+## 1     2158.70 15.50
+## 2     1678.15 23.75
+## 3     2316.00  8.00
+## 4     2061.30 17.00
+## 5     2207.50  5.50
+## 6     1708.30 19.00</code></pre>
+<p>Para crear un diagrama de dispersión que nos muestre la relación entre las dos variables usamos las siguientes instrucciones.</p>
+<pre class="r"><code>library(ggplot2)
+ggplot(datos, aes(x=Edad, y=Resistencia)) + geom_point()</code></pre>
+<p><img src="/post/neuralnet01_files/figure-html/unnamed-chunk-2-1.png" width="576" /></p>
+</div>
+<div id="paquete-neuralnet" class="section level2">
+<h2>Paquete <code>neuralnet</code></h2>
+<p>En este ejemplo vamos a usar la función <code>neuralnet</code> del paquete <code>neuralnet</code> para crear la red neuronal. La función <code>neuralnet</code> tiene la siguiente estructura.</p>
+<pre class="r"><code>neuralnet(formula, data, hidden = 1, threshold = 0.01,
+  stepmax = 1e+05, rep = 1, startweights = NULL,
+  learningrate.limit = NULL, learningrate.factor = list(minus = 0.5,
+  plus = 1.2), learningrate = NULL, lifesign = &quot;none&quot;,
+  lifesign.step = 1000, algorithm = &quot;rprop+&quot;, err.fct = &quot;sse&quot;,
+  act.fct = &quot;logistic&quot;, linear.output = TRUE, exclude = NULL,
+  constant.weights = NULL, likelihood = FALSE)</code></pre>
+<p>Para conocer en detalle la función se recomienda al lector escribir en la consola de R <code>help(neuralnet)</code>.</p>
+</div>
+<div id="creando-la-red-neuronal" class="section level2">
+<h2>Creando la red neuronal</h2>
+<p>Antes de crear la red es necesario escalar las variables para evitar el efecto de la escala de las variables. Existen varias formas de escalar pero aquí vamos a usar una transformación para pasar los valores de las variables al intervalo <span class="math inline">\((0, 1)\)</span>.</p>
+<p>Con el siguiente código vamos a convertir los datos originales del objeto <code>datos</code> a los datos escalados y se almacenarán en el objeto <code>scaled</code>.</p>
+<pre class="r"><code>maxs &lt;- apply(datos, 2, max) 
+mins &lt;- apply(datos, 2, min)
+scaled &lt;- as.data.frame(scale(datos, center=mins, scale=maxs - mins))</code></pre>
+<p>Para comparar los datos originales con los datos escalados podemos usar el siguiente código.</p>
+<pre class="r"><code>cbind(datos, scaled)[1:5, ]</code></pre>
+<pre><code>##   Resistencia  Edad Resistencia      Edad
+## 1     2158.70 15.50   0.4923416 0.5869565
+## 2     1678.15 23.75   0.0000000 0.9456522
+## 3     2316.00  8.00   0.6535014 0.2608696
+## 4     2061.30 17.00   0.3925516 0.6521739
+## 5     2207.50  5.50   0.5423390 0.1521739</code></pre>
+<p>Next figure shows the scatterplot for the scaled data, the form remains.</p>
+<pre class="r"><code>ggplot(scaled, aes(x=Edad, y=Resistencia)) + geom_point()</code></pre>
+<p><img src="/post/neuralnet01_files/figure-html/unnamed-chunk-6-1.png" width="576" /></p>
+<p>The first model <code>mod1</code> to consider has one layer with one node inside.</p>
+<pre class="r"><code>library(neuralnet)
+mod1 &lt;- neuralnet(Resistencia ~ Edad, data=scaled, 
+                  hidden=c(1), threshold=0.01)</code></pre>
+<p>We could plot the model using:</p>
+<pre class="r"><code>plot(mod1, rep=&quot;best&quot;)</code></pre>
+<p><img src="/post/neuralnet01_files/figure-html/unnamed-chunk-8-1.png" width="576" /></p>
+<p>The second model <code>mod2</code> has two layers, the first one with 2 nodes and the second with 3 nodes.</p>
+<pre class="r"><code>mod2 &lt;- neuralnet(Resistencia ~ Edad, data=scaled, 
+                  hidden=c(2, 3), threshold=0.01)</code></pre>
+<p>We could plot the model using:</p>
+<pre class="r"><code>plot(mod2, rep=&quot;best&quot;)</code></pre>
+<p><img src="/post/neuralnet01_files/figure-html/unnamed-chunk-10-1.png" width="576" /></p>
+<p>Because the <code>mod2</code> has the lowest <strong>Error</strong> we will use this model as final model.</p>
+</div>
+<div id="prediction" class="section level1">
+<h1>Prediction</h1>
+<p>In this example we have only 20, for this reason we did not split the original data in train and test data. Suppose that original, train and test data are the same.</p>
+<p>Next is the code to create a data frame with the feature Edad from the scaled data. The <code>compute</code> function can be used to obtain the predict response for a given test dataset.</p>
+<pre class="r"><code>test &lt;- data.frame(Edad = scaled[, 2])
+myprediction &lt;- compute(x=mod2, covariate=test)</code></pre>
+<p>The element <code>$net.result</code> from <code>myprediction</code> object has the <span class="math inline">\(\hat{y}\)</span> or estimated responses but in a scaled form, for this reason we need to apply the inverse transformation to obtain <span class="math inline">\(\hat{y}\)</span>.</p>
+<pre class="r"><code>yhat &lt;- myprediction$net.result * (max(datos$Resistencia)-min(datos$Resistencia))+min(datos$Resistencia)
+datos$yhat &lt;- yhat</code></pre>
+<p>We can plot the observed <span class="math inline">\(y\)</span> from test dataset versus <span class="math inline">\(\hat{y}\)</span>.</p>
+<pre class="r"><code>ggplot(datos, aes(x=Resistencia, y=yhat)) + geom_point() +
+  geom_abline(intercept=0, slope=1, color=&quot;blue&quot;, linetype=&quot;dashed&quot;, size=1.5)</code></pre>
+<p><img src="/post/neuralnet01_files/figure-html/unnamed-chunk-13-1.png" width="576" /></p>
 </div>
 
 </main>
