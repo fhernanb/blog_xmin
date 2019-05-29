@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo=TRUE, fig.width=4, fig.height=4, fig.align='center')
 En esta publicación se mostrará como usar redes neuronales para predecir el valor de una variable $Y$ en función de una sola covariable $X$ usando redes neuronales por medio del paquete `neuralnet`.
 
 ## Los datos
-En esta publicación vamos a usar los datos del ejemplo 2.1 del libro de [Montgomery, Peck and Vining (2003)](https://www.amazon.com/Introduccion-analisis-regresion-lineal-Spanish/dp/9702403278). En el ejemplo 2.1 los autores ajustaron un modelo de regresión lineal simple para explicar la Resistencia de una soldadura en función de la Edad de la misma. A continuación una figura ilustrativa del problema.
+En esta publicación vamos a usar los datos del ejemplo 2.1 del libro de [Montgomery, Peck and Vining (2003)](https://www.amazon.com/Introduccion-analisis-regresion-lineal-Spanish/dp/9702403278). En el ejemplo 2.1 los autores ajustaron un modelo de regresión lineal simple para explicar la Resistencia ($Y$) de una soldadura en función de la Edad ($X$) de la misma. A continuación una figura ilustrativa del problema.
 
 ![Figura: Ilustración del problema](/post/neuralnet01_files/soldador.png){width=40%}
 
@@ -99,20 +99,6 @@ mod1$act.fct          # Activation function
 unlist(mod1$weights)  # Weights
 ```
 
-
-Como ilustración vamos a construir una segunda red con dos capas, la primera con 2 nodos y la segunda con 3 nodos, a continuación el código.
-
-```{r}
-mod2 <- neuralnet(Resistencia ~ Edad, data=scaled, 
-                  hidden=c(2, 3), threshold=0.01)
-```
-
-Nuevamente podemos dibujar la red construída.
-
-```{r}
-plot(mod2, rep="best")
-```
-
 ## Predicción
 En este ejemplo la base de datos tiene solo 20 observaciones y por esta razón el conjunto de **entrenamiento** y conjunto de **prueba** son el mismo.
 
@@ -140,24 +126,37 @@ w <- unlist(mod1$weights)
 \begin{equation}
 \begin{split}
 \widehat{Resistencia} & = FunAct(Edad_1 \times `r w[2]` + `r w[1]`) \times `r w[4]` + `r w[3]` \\
- & = `r test[1, 1]` \times `r w[2]` + `r w[1]`) \times `r w[4]` + `r w[3]`\\
+ & = FunAct(`r test[1, 1]` \times `r w[2]` + `r w[1]`) \times `r w[4]` + `r w[3]`\\
  & = `r myprediction$net.result[1]`
 \end{split}
 \end{equation}
 
-El elemento `$net.result` del objeto `myprediction` tiene el $\hat{y}$ o respuesta estimada pero en la forma **escalada**, por esta razón es necesario aplicar la transformación inversa para obtener el resultado en la escala original $\hat{y}$.
+El elemento `$net.result` del objeto `myprediction` tiene el $\hat{y}$ o respuesta estimada pero en la forma **escalada**, por esta razón es necesario aplicar la transformación inversa para obtener el resultado en la escala original. A continuación el código necesario para retornar a la escala original.
 
 ```{r}
 yhat <- myprediction$net.result * (max(datos$Resistencia)-min(datos$Resistencia))+min(datos$Resistencia)
 datos$yhat <- yhat
 ```
 
-
-We can plot the observed $y$ from test dataset versus $\hat{y}$.
+Para comparar los resultados obtenidos con la red neuronal podemos dibujar los valores observados $y$ contra los valores $\hat{y}$. A continuación se muestra el código para crear el gráfico de dispersión al cual se le agrega un línea recta a 45 grados como referencia; entre más cerca este un punto de la línea, significa que $\hat{y}$ y $y$ son cercanos.
 
 ```{r}
 ggplot(datos, aes(x=Resistencia, y=yhat)) + geom_point() +
   geom_abline(intercept=0, slope=1, color="blue", linetype="dashed", size=1.5)
 ```
 
+Del gráfico anterior podemos ver que las estimaciones $\hat{y}$ son cercanas a los verdaderos $y$, adicionalmente el coeficiente de correlación lineal calculado es de `r cor(datos$Resistencia, datos$yhat)` lo cual es un valor alto.
 
+## Red neuronal con dos capas
+Como ilustración vamos a construir una segunda red con dos capas, la primera con 2 nodos y la segunda con 3 nodos, a continuación el código.
+
+```{r}
+mod2 <- neuralnet(Resistencia ~ Edad, data=scaled, 
+                  hidden=c(2, 3), threshold=0.01)
+```
+
+Nuevamente podemos dibujar la red construída.
+
+```{r}
+plot(mod2, rep="best")
+```

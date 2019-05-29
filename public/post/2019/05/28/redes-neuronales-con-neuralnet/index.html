@@ -39,7 +39,7 @@
 </div>
 <div id="los-datos" class="section level2">
 <h2>Los datos</h2>
-<p>En esta publicación vamos a usar los datos del ejemplo 2.1 del libro de <a href="https://www.amazon.com/Introduccion-analisis-regresion-lineal-Spanish/dp/9702403278">Montgomery, Peck and Vining (2003)</a>. En el ejemplo 2.1 los autores ajustaron un modelo de regresión lineal simple para explicar la Resistencia de una soldadura en función de la Edad de la misma. A continuación una figura ilustrativa del problema.</p>
+<p>En esta publicación vamos a usar los datos del ejemplo 2.1 del libro de <a href="https://www.amazon.com/Introduccion-analisis-regresion-lineal-Spanish/dp/9702403278">Montgomery, Peck and Vining (2003)</a>. En el ejemplo 2.1 los autores ajustaron un modelo de regresión lineal simple para explicar la Resistencia (<span class="math inline">\(Y\)</span>) de una soldadura en función de la Edad (<span class="math inline">\(X\)</span>) de la misma. A continuación una figura ilustrativa del problema.</p>
 <div class="figure">
 <img src="/post/neuralnet01_files/soldador.png" alt="Figura: Ilustración del problema" style="width:40.0%" />
 <p class="caption">Figura: Ilustración del problema</p>
@@ -111,18 +111,12 @@ mod1 &lt;- neuralnet(Resistencia ~ Edad, data=scaled,
 ## {
 ##     1/(1 + exp(-x))
 ## }
-## &lt;bytecode: 0x0000000017e7a280&gt;
-## &lt;environment: 0x0000000017e79790&gt;
+## &lt;bytecode: 0x0000000017e69b60&gt;
+## &lt;environment: 0x0000000017e6ca80&gt;
 ## attr(,&quot;type&quot;)
 ## [1] &quot;logistic&quot;</code></pre>
 <pre class="r"><code>unlist(mod1$weights)  # Weights</code></pre>
-<pre><code>## [1] -1.812444  2.171981  1.109873 -1.899491</code></pre>
-<p>Como ilustración vamos a construir una segunda red con dos capas, la primera con 2 nodos y la segunda con 3 nodos, a continuación el código.</p>
-<pre class="r"><code>mod2 &lt;- neuralnet(Resistencia ~ Edad, data=scaled, 
-                  hidden=c(2, 3), threshold=0.01)</code></pre>
-<p>Nuevamente podemos dibujar la red construída.</p>
-<pre class="r"><code>plot(mod2, rep=&quot;best&quot;)</code></pre>
-<p><img src="/post/neuralnet01_files/figure-html/unnamed-chunk-12-1.png" width="384" style="display: block; margin: auto;" /></p>
+<pre><code>## [1]  0.04503798 -1.42174223 -0.50341523  2.77747568</code></pre>
 </div>
 <div id="prediccion" class="section level2">
 <h2>Predicción</h2>
@@ -132,22 +126,32 @@ mod1 &lt;- neuralnet(Resistencia ~ Edad, data=scaled,
 myprediction &lt;- compute(x=mod1, covariate=test)</code></pre>
 <p>El objeto <code>myprediction</code> tiene varios elementos y uno de ellos es <code>$net.result</code> que contiene las predicciones. A continuación vamos a explorar los 5 primeros valores.</p>
 <pre class="r"><code>myprediction$net.result[1:5]</code></pre>
-<pre><code>## [1] 0.40943694 0.04600256 0.68548688 0.34572790 0.75820743</code></pre>
+<pre><code>## [1] 0.36394601 0.09168674 0.66104258 0.30962177 0.76665751</code></pre>
 <p>Preguntas que el lector debe tener en este momento son ¿de dónde vienen los valores anteriores? ¿cómo puedo obtener esos valores de la red gráfica?</p>
 <p>Para responder esas preguntas vamos a tomar como ejemplo el primer valor de la Edad escalada, es decir el valor 0.5869565. Vamos introducir este valor en la red número uno y vamos a realizar las operaciones indicadas en la figura asociadas a <code>mod1</code>.</p>
 <p><span class="math display">\[\begin{equation}
 \begin{split}
-\widehat{Resistencia} &amp; = FunAct(Edad_1 \times 2.1719806 + -1.8124438) \times -1.8994913 + 1.1098732 \\
- &amp; = 0.5869565 \times 2.1719806 + -1.8124438) \times -1.8994913 + 1.1098732\\
- &amp; = 0.4094369
+\widehat{Resistencia} &amp; = FunAct(Edad_1 \times -1.4217422 + 0.045038) \times 2.7774757 + -0.5034152 \\
+ &amp; = FunAct(0.5869565 \times -1.4217422 + 0.045038) \times 2.7774757 + -0.5034152\\
+ &amp; = 0.363946
 \end{split}
 \end{equation}\]</span></p>
-<p>El elemento <code>$net.result</code> del objeto <code>myprediction</code> tiene el <span class="math inline">\(\hat{y}\)</span> o respuesta estimada pero en la forma <strong>escalada</strong>, por esta razón es necesario aplicar la transformación inversa para obtener el resultado en la escala original <span class="math inline">\(\hat{y}\)</span>.</p>
+<p>El elemento <code>$net.result</code> del objeto <code>myprediction</code> tiene el <span class="math inline">\(\hat{y}\)</span> o respuesta estimada pero en la forma <strong>escalada</strong>, por esta razón es necesario aplicar la transformación inversa para obtener el resultado en la escala original. A continuación el código necesario para retornar a la escala original.</p>
 <pre class="r"><code>yhat &lt;- myprediction$net.result * (max(datos$Resistencia)-min(datos$Resistencia))+min(datos$Resistencia)
 datos$yhat &lt;- yhat</code></pre>
-<p>We can plot the observed <span class="math inline">\(y\)</span> from test dataset versus <span class="math inline">\(\hat{y}\)</span>.</p>
+<p>Para comparar los resultados obtenidos con la red neuronal podemos dibujar los valores observados <span class="math inline">\(y\)</span> contra los valores <span class="math inline">\(\hat{y}\)</span>. A continuación se muestra el código para crear el gráfico de dispersión al cual se le agrega un línea recta a 45 grados como referencia; entre más cerca este un punto de la línea, significa que <span class="math inline">\(\hat{y}\)</span> y <span class="math inline">\(y\)</span> son cercanos.</p>
 <pre class="r"><code>ggplot(datos, aes(x=Resistencia, y=yhat)) + geom_point() +
   geom_abline(intercept=0, slope=1, color=&quot;blue&quot;, linetype=&quot;dashed&quot;, size=1.5)</code></pre>
+<p><img src="/post/neuralnet01_files/figure-html/unnamed-chunk-15-1.png" width="384" style="display: block; margin: auto;" /></p>
+<p>Del gráfico anterior podemos ver que las estimaciones <span class="math inline">\(\hat{y}\)</span> son cercanas a los verdaderos <span class="math inline">\(y\)</span>, adicionalmente el coeficiente de correlación lineal calculado es de 0.9467622 lo cual es un valor alto.</p>
+</div>
+<div id="red-neuronal-con-dos-capas" class="section level2">
+<h2>Red neuronal con dos capas</h2>
+<p>Como ilustración vamos a construir una segunda red con dos capas, la primera con 2 nodos y la segunda con 3 nodos, a continuación el código.</p>
+<pre class="r"><code>mod2 &lt;- neuralnet(Resistencia ~ Edad, data=scaled, 
+                  hidden=c(2, 3), threshold=0.01)</code></pre>
+<p>Nuevamente podemos dibujar la red construída.</p>
+<pre class="r"><code>plot(mod2, rep=&quot;best&quot;)</code></pre>
 <p><img src="/post/neuralnet01_files/figure-html/unnamed-chunk-17-1.png" width="384" style="display: block; margin: auto;" /></p>
 </div>
 
