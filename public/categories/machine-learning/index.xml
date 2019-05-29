@@ -1,25 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Machine learning on Blog de Freddy</title>
-    <link>/categories/machine-learning/</link>
-    <description>Recent content in Machine learning on Blog de Freddy</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Thu, 21 Feb 2019 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="/categories/machine-learning/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>Redes neuronales con neuralnet</title>
-      <link>/post/2019/02/21/redes-neuronales-con-neuralnet/</link>
-      <pubDate>Thu, 21 Feb 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2019/02/21/redes-neuronales-con-neuralnet/</guid>
-      <description>IntroducciónEn esta publicación se mostrará al lector la forma de implementar el modelo bayesiano normal-Cauchy. Este modelo está basado en el ejercicio propuesto 3.1 del libro Introducing Monte Carlo Methods with R.
-</description>
-    </item>
-    
-  </channel>
-</rss>

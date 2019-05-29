@@ -1,67 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Home on Blog de Freddy</title>
-    <link>/</link>
-    <description>Recent content in Home on Blog de Freddy</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Thu, 21 Feb 2019 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>Modelo bayesiano normal-Cauchy</title>
-      <link>/post/2019/02/21/modelo-bayesiano-normal-cauchy/</link>
-      <pubDate>Thu, 21 Feb 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2019/02/21/modelo-bayesiano-normal-cauchy/</guid>
-      <description>IntroducciónEn esta publicación se mostrará al lector la forma de implementar el modelo bayesiano normal-Cauchy. Este modelo está basado en el ejercicio propuesto 3.1 del libro Introducing Monte Carlo Methods with R.
-ModeloSuponga que tenemos una sola observación \(x=3\) de una población con distribución \(N(\theta, 1)\) y que lo queremos es estimar la media \(\theta\) de esa población. Suponga también que tenemos sospechas de que el parámetro \(\theta\) varía según una distribución \(Cauchy(l=0, s=1)\).</description>
-    </item>
-    
-    <item>
-      <title>Redes neuronales con neuralnet</title>
-      <link>/post/2019/02/21/redes-neuronales-con-neuralnet/</link>
-      <pubDate>Thu, 21 Feb 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2019/02/21/redes-neuronales-con-neuralnet/</guid>
-      <description>IntroducciónEn esta publicación se mostrará al lector la forma de implementar el modelo bayesiano normal-Cauchy. Este modelo está basado en el ejercicio propuesto 3.1 del libro Introducing Monte Carlo Methods with R.
-</description>
-    </item>
-    
-    <item>
-      <title>Análisis de componentes principales</title>
-      <link>/post/2019/02/01/an%C3%A1lisis-de-componentes-principales/</link>
-      <pubDate>Fri, 01 Feb 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2019/02/01/an%C3%A1lisis-de-componentes-principales/</guid>
-      <description>IntroducciónEn esta publicación se mostrará al lector en qué es el análisis de componentes principales, los conceptos básicos detrás de la técnica y varios ejemplos ilustrativos.
-Análisis de componentes principalesEs una herramienta para reducir el numero de variables originales por nuevas variables llamadas componentes y que son incorrelacionadas. Con esta herramienta es posible pasar de un problema de dimensión \(n \times p\), a un problema de dimensión \(n \times k\), siendo \(k &amp;lt; p\).</description>
-    </item>
-    
-    <item>
-      <title>Simulación de modelos mixtos</title>
-      <link>/post/2019/01/15/simulaci%C3%B3n-de-modelos-mixtos/</link>
-      <pubDate>Tue, 15 Jan 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2019/01/15/simulaci%C3%B3n-de-modelos-mixtos/</guid>
-      <description>IntroducciónEn esta publicación se mostrará al lector cómo simular datos de un modelo lineal (sin y con efectos aleatorios) y la forma de estimar los parámetros. Los modelos a considerar son:
-Modelo lineal clásico,
-Modelo lineal con intercepto aleatorio,
-Modelo lineal con pendiente aleatoria,
-Modelo lineal con intercepto y pendiente aleatoria.Ilustración de un modelo mixtoSe recomienda al lector que visite este enlace para que vea una ilustración muy interesante de modelos mixtos.</description>
-    </item>
-    
-    <item>
-      <title>About Hugo XMin</title>
-      <link>/about/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/about/</guid>
-      <description>XMin is the first Hugo theme I have designed. The original reason that I wrote it was I needed a minimal example of Hugo themes when I was writing the blogdown book. Basically I wanted a simple theme that supports a navigation menu, a home page, other single pages, lists of pages, blog posts, categories, tags, and RSS. That is all. Nothing fancy. In terms of CSS and JavaScript, I really want to keep them minimal.</description>
-    </item>
-    
-  </channel>
-</rss>

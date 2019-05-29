@@ -1,25 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Bayesiana on Blog de Freddy</title>
-    <link>/categories/bayesiana/</link>
-    <description>Recent content in Bayesiana on Blog de Freddy</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Thu, 21 Feb 2019 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="/categories/bayesiana/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>Modelo bayesiano normal-Cauchy</title>
-      <link>/post/2019/02/21/modelo-bayesiano-normal-cauchy/</link>
-      <pubDate>Thu, 21 Feb 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2019/02/21/modelo-bayesiano-normal-cauchy/</guid>
-      <description>IntroducciónEn esta publicación se mostrará al lector la forma de implementar el modelo bayesiano normal-Cauchy. Este modelo está basado en el ejercicio propuesto 3.1 del libro Introducing Monte Carlo Methods with R.
-ModeloSuponga que tenemos una sola observación \(x=3\) de una población con distribución \(N(\theta, 1)\) y que lo queremos es estimar la media \(\theta\) de esa población. Suponga también que tenemos sospechas de que el parámetro \(\theta\) varía según una distribución \(Cauchy(l=0, s=1)\).</description>
-    </item>
-    
-  </channel>
-</rss>
