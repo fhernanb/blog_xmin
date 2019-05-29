@@ -3,12 +3,12 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/post/2019/02/21/modelo-bayesiano-normal-cauchy/</loc>
-    <lastmod>2019-02-21T00:00:00+00:00</lastmod>
+    <loc>/post/2019/05/28/redes-neuronales-con-neuralnet/</loc>
+    <lastmod>2019-05-28T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/post/2019/02/21/redes-neuronales-con-neuralnet/</loc>
+    <loc>/post/2019/02/21/modelo-bayesiano-normal-cauchy/</loc>
     <lastmod>2019-02-21T00:00:00+00:00</lastmod>
   </url>
   
@@ -46,7 +46,7 @@
   
   <url>
     <loc>/tags/cauchy/</loc>
-    <lastmod>2019-02-21T00:00:00+00:00</lastmod>
+    <lastmod>2019-05-28T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -58,18 +58,18 @@
   
   <url>
     <loc>/</loc>
-    <lastmod>2019-02-21T00:00:00+00:00</lastmod>
+    <lastmod>2019-05-28T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/categories/machine-learning/</loc>
-    <lastmod>2019-02-21T00:00:00+00:00</lastmod>
+    <lastmod>2019-05-28T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/post/</loc>
-    <lastmod>2019-02-21T00:00:00+00:00</lastmod>
+    <lastmod>2019-05-28T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -81,7 +81,7 @@
   
   <url>
     <loc>/tags/</loc>
-    <lastmod>2019-02-21T00:00:00+00:00</lastmod>
+    <lastmod>2019-05-28T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -99,7 +99,7 @@
   
   <url>
     <loc>/tags/normal/</loc>
-    <lastmod>2019-02-21T00:00:00+00:00</lastmod>
+    <lastmod>2019-05-28T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
