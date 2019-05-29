@@ -199,6 +199,6 @@ mod3 <- neuralnet(Resistencia ~ Edad, data=scaled,
 
 Nuevamente podemos dibujar la red construída.
 
-```{r}
+```{r, fig.width=8}
 plot(mod3, rep="best")
 ```
