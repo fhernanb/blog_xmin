@@ -137,9 +137,13 @@ Para responder esas preguntas vamos a tomar como ejemplo el primer valor de la E
 w <- unlist(mod1$weights)
 ```
 
-$$
-\widehat{Resistencia} = FunAct(Edad_1 \times `r w[2]` + `r w[1]`) \times `r w[4]` + `r w[3]` = `r myprediction$net.result[1]`
-$$
+\begin{equation}
+\begin{split}
+\widehat{Resistencia} & = FunAct(Edad_1 \times `r w[2]` + `r w[1]`) \times `r w[4]` + `r w[3]` \\
+ & = `r test[1, 1]` \times `r w[2]` + `r w[1]`) \times `r w[4]` + `r w[3]`\\
+ & = `r myprediction$net.result[1]`
+\end{split}
+\end{equation}
 
 El elemento `$net.result` del objeto `myprediction` tiene el $\hat{y}$ o respuesta estimada pero en la forma **escalada**, por esta razón es necesario aplicar la transformación inversa para obtener el resultado en la escala original $\hat{y}$.
 
