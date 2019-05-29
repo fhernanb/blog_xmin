@@ -3,7 +3,7 @@ title: "Redes neuronales con neuralnet"
 author: "Freddy Hernández"
 date: '2019-05-28'
 categories: ["Machine learning"]
-tags: ["normal", "Cauchy"]
+tags: ["modelo lineal simple"]
 ---
 
 
@@ -54,35 +54,70 @@ ggplot(datos, aes(x=Edad, y=Resistencia)) + geom_point()</code></pre>
 <pre class="r"><code>maxs &lt;- apply(datos, 2, max) 
 mins &lt;- apply(datos, 2, min)
 scaled &lt;- as.data.frame(scale(datos, center=mins, scale=maxs-mins))</code></pre>
+<p>A continuación vamos a comparar las primeras 6 filas de <code>datos</code> y de <code>scaled</code> para ver lo que sucedió.</p>
+<pre class="r"><code>head(cbind(datos, scaled))</code></pre>
+<pre><code>##   Resistencia  Edad Resistencia      Edad
+## 1     2158.70 15.50  0.49234158 0.5869565
+## 2     1678.15 23.75  0.00000000 0.9456522
+## 3     2316.00  8.00  0.65350136 0.2608696
+## 4     2061.30 17.00  0.39255161 0.6521739
+## 5     2207.50  5.50  0.54233902 0.1521739
+## 6     1708.30 19.00  0.03088981 0.7391304</code></pre>
 <p>En la siguiente figura se muestra el diagrama de dispersión para las variables escaladas. Al comparar ambos gráficos de dispersión (con <code>datos</code> y con <code>scaled</code>) se observa el mismo patrón en la nube de puntos, la única diferencia es que ahora los valores de las variables (<span class="math inline">\(Y\)</span> y <span class="math inline">\(X\)</span>) están en <span class="math inline">\((0, 1)\)</span>.</p>
 <pre class="r"><code>ggplot(scaled, aes(x=Edad, y=Resistencia)) + geom_point()</code></pre>
-<p><img src="/post/neuralnet01_files/figure-html/unnamed-chunk-5-1.png" width="384" style="display: block; margin: auto;" /></p>
+<p><img src="/post/neuralnet01_files/figure-html/unnamed-chunk-6-1.png" width="384" style="display: block; margin: auto;" /></p>
 <p>La primera red neuronal a considerar se llamará <code>mod1</code> y tendrá una capa con un solo nodo. El código para crear la red es el siguiente.</p>
 <pre class="r"><code>library(neuralnet)
 mod1 &lt;- neuralnet(Resistencia ~ Edad, data=scaled, 
                   hidden=c(1), threshold=0.01)</code></pre>
 <p>Se puede construir un dibujo con la red ajustada usando la función <code>plot</code> sobre el objeto <code>mod1</code>.</p>
 <pre class="r"><code>plot(mod1, rep=&quot;best&quot;)</code></pre>
-<p><img src="/post/neuralnet01_files/figure-html/unnamed-chunk-7-1.png" width="384" style="display: block; margin: auto;" /></p>
+<p><img src="/post/neuralnet01_files/figure-html/unnamed-chunk-8-1.png" width="384" style="display: block; margin: auto;" /></p>
+<p>El objeto <code>mod1</code> tiene varios elementos en su interior, para ver lo que hay dentro podemos usar el código siguiente.</p>
+<pre class="r"><code>names(mod1)</code></pre>
+<pre><code>##  [1] &quot;call&quot;                &quot;response&quot;            &quot;covariate&quot;          
+##  [4] &quot;model.list&quot;          &quot;err.fct&quot;             &quot;act.fct&quot;            
+##  [7] &quot;linear.output&quot;       &quot;data&quot;                &quot;exclude&quot;            
+## [10] &quot;net.result&quot;          &quot;weights&quot;             &quot;generalized.weights&quot;
+## [13] &quot;startweights&quot;        &quot;result.matrix&quot;</code></pre>
+<p>El elemento <code>act.fct</code> es la función de activación y el elemento <code>weights</code> contine los pesos mostrados en la anterior figura. Estos dos elementos nos serán útiles más adelante. A continuación el código para explorar lo que hay dentro de estos dos elementos.</p>
+<pre class="r"><code>mod1$act.fct          # Activation function</code></pre>
+<pre><code>## function (x) 
+## {
+##     1/(1 + exp(-x))
+## }
+## &lt;bytecode: 0x0000000017e6ccb8&gt;
+## &lt;environment: 0x0000000017e6c350&gt;
+## attr(,&quot;type&quot;)
+## [1] &quot;logistic&quot;</code></pre>
+<pre class="r"><code>unlist(mod1$weights)  # Weights</code></pre>
+<pre><code>## [1] -1.992992  2.567690  1.032744 -1.631167</code></pre>
 <p>Como ilustración vamos a construir una segunda red con dos capas, la primera con 2 nodos y la segunda con 3 nodos, a continuación el código.</p>
 <pre class="r"><code>mod2 &lt;- neuralnet(Resistencia ~ Edad, data=scaled, 
                   hidden=c(2, 3), threshold=0.01)</code></pre>
 <p>Nuevamente podemos dibujar la red construída.</p>
 <pre class="r"><code>plot(mod2, rep=&quot;best&quot;)</code></pre>
-<p><img src="/post/neuralnet01_files/figure-html/unnamed-chunk-9-1.png" width="384" style="display: block; margin: auto;" /></p>
+<p><img src="/post/neuralnet01_files/figure-html/unnamed-chunk-12-1.png" width="384" style="display: block; margin: auto;" /></p>
 </div>
 <div id="prediccion" class="section level2">
 <h2>Predicción</h2>
-<p>En este ejemplo la base de datos tiene solo 20 observaciones, por esta razón</p>
-<p>In this example we have only 20, for this reason we did not split the original data in train and test data. Suppose that original, train and test data are the same.</p>
-<p>Next is the code to create a data frame with the feature Edad from the scaled data. The <code>compute</code> function can be used to obtain the predict response for a given test dataset.</p>
-<pre class="r"><code>test &lt;- data.frame(Edad = scaled[, 2])
-myprediction &lt;- compute(x=mod2, covariate=test)</code></pre>
-<p>The element <code>$net.result</code> from <code>myprediction</code> object has the <span class="math inline">\(\hat{y}\)</span> or estimated responses but in a scaled form, for this reason we need to apply the inverse transformation to obtain <span class="math inline">\(\hat{y}\)</span>.</p>
+<p>En este ejemplo la base de datos tiene solo 20 observaciones y por esta razón el conjunto de <strong>entrenamiento</strong> y conjunto de <strong>prueba</strong> son el mismo.</p>
+<p>En el código mostrado a continuación se crea el conjunto de prueba <code>test</code> solo con la covariable Edad proveniente de la base <code>scaled</code>. La función <code>compute</code> permite predecir los valores Resistencia para la informacion disponible en <code>test</code> teniendo como referencia una red neuronal entrenada, en este caso vamos a usar <code>mod1</code>.</p>
+<pre class="r"><code>test &lt;- data.frame(Edad = scaled$Edad)
+myprediction &lt;- compute(x=mod1, covariate=test)</code></pre>
+<p>El objeto <code>myprediction</code> tiene varios elementos y uno de ellos es <code>$net.result</code> que contiene las predicciones. A continuación vamos a explorar los 5 primeros valores.</p>
+<pre class="r"><code>myprediction$net.result[1:5]</code></pre>
+<pre><code>## [1] 0.41148589 0.04245773 0.68972070 0.34591973 0.75925183</code></pre>
+<p>Preguntas que el lector debe tener en este momento son ¿de dónde vienen los valores anteriores? ¿cómo puedo obtener esos valores de la red gráfica?</p>
+<p>Para responder esas preguntas vamos a tomar como ejemplo el primer valor de la Edad escalada, es decir el valor 0.5869565. Vamos introducir este valor en la red número uno y vamos a realizar las operaciones indicadas en la figura asociadas a <code>mod1</code>.</p>
+<p><span class="math display">\[
+\widehat{Resistencia} = FunAct(Edad_1 \times 2.5676901 + -1.9929915) \times w[4] + w[3] = myprediction$net.result[1]
+\]</span></p>
+<p>El elemento <code>$net.result</code> del objeto <code>myprediction</code> tiene el <span class="math inline">\(\hat{y}\)</span> o respuesta estimada pero en la forma <strong>escalada</strong>, por esta razón es necesario aplicar la transformación inversa para obtener el resultado en la escala original <span class="math inline">\(\hat{y}\)</span>.</p>
 <pre class="r"><code>yhat &lt;- myprediction$net.result * (max(datos$Resistencia)-min(datos$Resistencia))+min(datos$Resistencia)
 datos$yhat &lt;- yhat</code></pre>
 <p>We can plot the observed <span class="math inline">\(y\)</span> from test dataset versus <span class="math inline">\(\hat{y}\)</span>.</p>
 <pre class="r"><code>ggplot(datos, aes(x=Resistencia, y=yhat)) + geom_point() +
   geom_abline(intercept=0, slope=1, color=&quot;blue&quot;, linetype=&quot;dashed&quot;, size=1.5)</code></pre>
-<p><img src="/post/neuralnet01_files/figure-html/unnamed-chunk-12-1.png" width="384" style="display: block; margin: auto;" /></p>
+<p><img src="/post/neuralnet01_files/figure-html/unnamed-chunk-17-1.png" width="384" style="display: block; margin: auto;" /></p>
 </div>

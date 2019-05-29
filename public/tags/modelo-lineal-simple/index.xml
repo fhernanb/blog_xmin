@@ -6,10 +6,20 @@
     <description>Recent content in modelo lineal simple on Blog de Freddy</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 15 Jan 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 28 May 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/modelo-lineal-simple/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Redes neuronales con neuralnet</title>
+      <link>/post/2019/05/28/redes-neuronales-con-neuralnet/</link>
+      <pubDate>Tue, 28 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2019/05/28/redes-neuronales-con-neuralnet/</guid>
+      <description>IntroducciónEn esta publicación se mostrará como usar redes neuronales para predecir el valor de una variable \(Y\) en función de una sola covariable \(X\) usando redes neuronales por medio del paquete neuralnet.
+Los datosEn esta publicación vamos a usar los datos del ejemplo 2.1 del libro de Montgomery, Peck and Vining (2003). En el ejemplo 2.1 los autores ajustaron un modelo de regresión lineal simple para explicar la Resistencia de una soldadura en función de la Edad de la misma.</description>
+    </item>
     
     <item>
       <title>Simulación de modelos mixtos</title>

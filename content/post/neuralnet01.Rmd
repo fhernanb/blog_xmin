@@ -3,7 +3,7 @@ title: "Redes neuronales con neuralnet"
 author: "Freddy Hernández"
 date: '2019-05-28'
 categories: ["Machine learning"]
-tags: ["normal", "Cauchy"]
+tags: ["modelo lineal simple"]
 ---
 
 ```{r setup, include=FALSE}
@@ -59,6 +59,13 @@ mins <- apply(datos, 2, min)
 scaled <- as.data.frame(scale(datos, center=mins, scale=maxs-mins))
 ```
 
+A continuación vamos a comparar las primeras 6 filas de `datos` y de `scaled` para ver lo que sucedió.
+
+```{r}
+head(cbind(datos, scaled))
+```
+
+
 En la siguiente figura se muestra el diagrama de dispersión para las variables escaladas. Al comparar ambos gráficos de dispersión (con `datos` y con `scaled`) se observa el mismo patrón en la nube de puntos, la única diferencia es que ahora los valores de las variables ($Y$ y $X$) están en $(0, 1)$.
 
 ```{r}
@@ -79,6 +86,20 @@ Se puede construir un dibujo con la red ajustada usando la función `plot` sobre
 plot(mod1, rep="best")
 ```
 
+El objeto `mod1` tiene varios elementos en su interior, para ver lo que hay dentro podemos usar el código siguiente.
+
+```{r}
+names(mod1)
+```
+
+El elemento `act.fct` es la función de activación y el elemento `weights` contine los pesos mostrados en la anterior figura. Estos dos elementos nos serán útiles más adelante. A continuación el código para explorar lo que hay dentro de estos dos elementos.
+
+```{r}
+mod1$act.fct          # Activation function
+unlist(mod1$weights)  # Weights
+```
+
+
 Como ilustración vamos a construir una segunda red con dos capas, la primera con 2 nodos y la segunda con 3 nodos, a continuación el código.
 
 ```{r}
@@ -93,23 +114,40 @@ plot(mod2, rep="best")
 ```
 
 ## Predicción
-En este ejemplo la base de datos tiene solo 20 observaciones, por esta razón
+En este ejemplo la base de datos tiene solo 20 observaciones y por esta razón el conjunto de **entrenamiento** y conjunto de **prueba** son el mismo.
 
-In this example we have only `r dim(datos)[1]`, for this reason we did not split the original data in train and test data. Suppose that original, train and test data are the same.
-
-Next is the code to create a data frame with the feature Edad from the scaled data. The `compute` function can be used to obtain the predict response for a given test dataset.
+En el código mostrado a continuación se crea el conjunto de prueba `test` solo con la covariable Edad proveniente de la base `scaled`. La función `compute` permite predecir los valores Resistencia para la informacion disponible en `test` teniendo como referencia una red neuronal entrenada, en este caso vamos a usar `mod1`.
 
 ```{r}
-test <- data.frame(Edad = scaled[, 2])
-myprediction <- compute(x=mod2, covariate=test)
+test <- data.frame(Edad = scaled$Edad)
+myprediction <- compute(x=mod1, covariate=test)
 ```
 
-The element `$net.result` from `myprediction` object has the $\hat{y}$ or estimated responses but in a scaled form, for this reason we need to apply the inverse transformation to obtain $\hat{y}$.
+El objeto `myprediction` tiene varios elementos y uno de ellos es `$net.result` que contiene las predicciones. A continuación vamos a explorar los 5 primeros valores.
+
+```{r}
+myprediction$net.result[1:5]
+```
+
+Preguntas que el lector debe tener en este momento son ¿de dónde vienen los valores anteriores? ¿cómo puedo obtener esos valores de la red gráfica?
+
+Para responder esas preguntas vamos a tomar como ejemplo el primer valor de la Edad escalada, es decir el valor `r test[1, 1]`. Vamos introducir este valor en la red número uno y vamos a realizar las operaciones indicadas en la figura asociadas a `mod1`.
+
+```{r, echo=FALSE}
+w <- unlist(mod1$weights)
+```
+
+$$
+\widehat{Resistencia} = FunAct(Edad_1 \times `r w[2]` + `r w[1]`) \times w[4] + w[3] = myprediction$net.result[1]
+$$
+
+El elemento `$net.result` del objeto `myprediction` tiene el $\hat{y}$ o respuesta estimada pero en la forma **escalada**, por esta razón es necesario aplicar la transformación inversa para obtener el resultado en la escala original $\hat{y}$.
 
 ```{r}
 yhat <- myprediction$net.result * (max(datos$Resistencia)-min(datos$Resistencia))+min(datos$Resistencia)
 datos$yhat <- yhat
 ```
+
 
 We can plot the observed $y$ from test dataset versus $\hat{y}$.
 
