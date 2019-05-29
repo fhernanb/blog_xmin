@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on Blog de Freddy</title>
+    <link>/categories/</link>
+    <description>Recent content in Categories on Blog de Freddy</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 01 Feb 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Análisis multivariado</title>
+      <link>/categories/an%C3%A1lisis-multivariado/</link>
+      <pubDate>Fri, 01 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/an%C3%A1lisis-multivariado/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Bayesiana</title>
+      <link>/categories/bayesiana/</link>
+      <pubDate>Thu, 21 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/bayesiana/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Machine learning</title>
+      <link>/categories/machine-learning/</link>
+      <pubDate>Thu, 21 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/machine-learning/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Simulación</title>
+      <link>/categories/simulaci%C3%B3n/</link>
+      <pubDate>Tue, 15 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/simulaci%C3%B3n/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

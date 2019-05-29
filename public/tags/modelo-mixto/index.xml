@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>modelo mixto on Blog de Freddy</title>
+    <link>/tags/modelo-mixto/</link>
+    <description>Recent content in modelo mixto on Blog de Freddy</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 15 Jan 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/modelo-mixto/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Simulación de modelos mixtos</title>
+      <link>/post/2019/01/15/simulaci%C3%B3n-de-modelos-mixtos/</link>
+      <pubDate>Tue, 15 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2019/01/15/simulaci%C3%B3n-de-modelos-mixtos/</guid>
+      <description>IntroducciónEn esta publicación se mostrará al lector cómo simular datos de un modelo lineal (sin y con efectos aleatorios) y la forma de estimar los parámetros. Los modelos a considerar son:
+Modelo lineal clásico,
+Modelo lineal con intercepto aleatorio,
+Modelo lineal con pendiente aleatoria,
+Modelo lineal con intercepto y pendiente aleatoria.Ilustración de un modelo mixtoSe recomienda al lector que visite este enlace para que vea una ilustración muy interesante de modelos mixtos.</description>
+    </item>
+    
+  </channel>
+</rss>

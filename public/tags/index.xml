@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Blog de Freddy</title>
+    <link>/tags/</link>
+    <description>Recent content in Tags on Blog de Freddy</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 21 Feb 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Cauchy</title>
+      <link>/tags/cauchy/</link>
+      <pubDate>Thu, 21 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/cauchy/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Componentes principales</title>
+      <link>/tags/componentes-principales/</link>
+      <pubDate>Fri, 01 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/componentes-principales/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>modelo lineal simple</title>
+      <link>/tags/modelo-lineal-simple/</link>
+      <pubDate>Tue, 15 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/modelo-lineal-simple/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>modelo mixto</title>
+      <link>/tags/modelo-mixto/</link>
+      <pubDate>Tue, 15 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/modelo-mixto/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>normal</title>
+      <link>/tags/normal/</link>
+      <pubDate>Thu, 21 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/normal/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
