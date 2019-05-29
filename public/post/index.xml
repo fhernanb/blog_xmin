@@ -22,6 +22,16 @@
     </item>
     
     <item>
+      <title>Redes neuronales con neuralnet</title>
+      <link>/post/2019/02/21/redes-neuronales-con-neuralnet/</link>
+      <pubDate>Thu, 21 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2019/02/21/redes-neuronales-con-neuralnet/</guid>
+      <description>IntroducciónEn esta publicación se mostrará al lector la forma de implementar el modelo bayesiano normal-Cauchy. Este modelo está basado en el ejercicio propuesto 3.1 del libro Introducing Monte Carlo Methods with R.
+</description>
+    </item>
+    
+    <item>
       <title>Análisis de componentes principales</title>
       <link>/post/2019/02/01/an%C3%A1lisis-de-componentes-principales/</link>
       <pubDate>Fri, 01 Feb 2019 00:00:00 +0000</pubDate>

@@ -1,0 +1,16 @@
+---
+title: "Redes neuronales con neuralnet"
+author: "Freddy Hernández"
+date: '2019-02-21'
+categories: ["Machine learning"]
+tags: ["normal", "Cauchy"]
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, fig.width=6, fig.height=5)
+```
+
+## Introducción
+En esta publicación se mostrará al lector la forma de implementar el modelo bayesiano normal-Cauchy. Este modelo está basado en el ejercicio propuesto 3.1 del libro [Introducing Monte Carlo Methods with R](https://www.springer.com/fr/book/9781441915757).
+
+

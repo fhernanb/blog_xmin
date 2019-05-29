@@ -21,5 +21,15 @@
 ModeloSuponga que tenemos una sola observación \(x=3\) de una población con distribución \(N(\theta, 1)\) y que lo queremos es estimar la media \(\theta\) de esa población. Suponga también que tenemos sospechas de que el parámetro \(\theta\) varía según una distribución \(Cauchy(l=0, s=1)\).</description>
     </item>
     
+    <item>
+      <title>Redes neuronales con neuralnet</title>
+      <link>/post/2019/02/21/redes-neuronales-con-neuralnet/</link>
+      <pubDate>Thu, 21 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2019/02/21/redes-neuronales-con-neuralnet/</guid>
+      <description>IntroducciónEn esta publicación se mostrará al lector la forma de implementar el modelo bayesiano normal-Cauchy. Este modelo está basado en el ejercicio propuesto 3.1 del libro Introducing Monte Carlo Methods with R.
+</description>
+    </item>
+    
   </channel>
 </rss>

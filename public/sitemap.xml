@@ -8,6 +8,11 @@
   </url>
   
   <url>
+    <loc>/post/2019/02/21/redes-neuronales-con-neuralnet/</loc>
+    <lastmod>2019-02-21T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/post/2019/02/01/an%C3%A1lisis-de-componentes-principales/</loc>
     <lastmod>2019-02-01T00:00:00+00:00</lastmod>
   </url>
@@ -54,6 +59,12 @@
   <url>
     <loc>/</loc>
     <lastmod>2019-02-21T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/machine-learning/</loc>
+    <lastmod>2019-02-21T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
