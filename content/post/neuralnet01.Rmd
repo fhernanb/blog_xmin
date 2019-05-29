@@ -92,11 +92,11 @@ El objeto `mod1` tiene varios elementos en su interior, para ver lo que hay dent
 names(mod1)
 ```
 
-El elemento `act.fct` es la función de activación y el elemento `weights` contine los pesos mostrados en la anterior figura. Estos dos elementos nos serán útiles más adelante. A continuación el código para explorar lo que hay dentro de estos dos elementos.
+El elemento `act.fct` es la función de activación ([logística](https://en.wikipedia.org/wiki/Logistic_function) por defecto) y el elemento `weights` contiene los pesos mostrados en la anterior figura. Estos dos elementos serán útiles más adelante. A continuación el código para explorar lo que hay dentro de estos dos elementos.
 
 ```{r}
 mod1$act.fct          # Activation function
-unlist(mod1$weights)  # Weights
+unlist(mod1$weights)  # To obtain weights in vector form
 ```
 
 ## Predicción
@@ -115,9 +115,12 @@ El objeto `myprediction` tiene varios elementos y uno de ellos es `$net.result` 
 myprediction$net.result[1:5]
 ```
 
-Preguntas que el lector debe tener en este momento son ¿de dónde vienen los valores anteriores? ¿cómo puedo obtener esos valores de la red gráfica?
+Algunas preguntas que el lector debe tener en este momento son:
 
-Para responder esas preguntas vamos a tomar como ejemplo el primer valor de la Edad escalada, es decir el valor `r test[1, 1]`. Vamos introducir este valor en la red número uno y vamos a realizar las operaciones indicadas en la figura asociadas a `mod1`.
+- ¿de dónde vienen los valores anteriores?
+- ¿cómo puedo obtener esos valores de la red gráfica?
+
+Para responder las preguntas vamos a tomar como ejemplo el primer valor de la Edad escalada, es decir el valor `r test[1, 1]`, y con ella vamos a estimar el valor de resistencia escalada. Vamos introducir este valor en la red número uno y vamos a realizar las operaciones indicadas en la figura asociadas a `mod1`.
 
 ```{r, echo=FALSE}
 w <- unlist(mod1$weights)
@@ -125,38 +128,77 @@ w <- unlist(mod1$weights)
 
 \begin{equation}
 \begin{split}
-\widehat{Resistencia} & = FunAct(Edad_1 \times `r w[2]` + `r w[1]`) \times `r w[4]` + `r w[3]` \\
+\widehat{Resistencia}_1 & = FunAct(Edad_1 \times `r w[2]` + `r w[1]`) \times `r w[4]` + `r w[3]` \\
  & = FunAct(`r test[1, 1]` \times `r w[2]` + `r w[1]`) \times `r w[4]` + `r w[3]`\\
  & = `r myprediction$net.result[1]`
 \end{split}
 \end{equation}
 
-El elemento `$net.result` del objeto `myprediction` tiene el $\hat{y}$ o respuesta estimada pero en la forma **escalada**, por esta razón es necesario aplicar la transformación inversa para obtener el resultado en la escala original. A continuación el código necesario para retornar a la escala original.
+Del anterior resultado vemos que $\widehat{Resistencia}_1$ coincide con el valor obtenido de `myprediction$net.result[1]`, esto responde las dos preguntas anteriores.
+
+Otro aspecto importante es que el elemento `$net.result` del objeto `myprediction` tiene el $\hat{y}$ o respuesta estimada pero en la forma **escalada**, por esta razón es necesario aplicar la transformación inversa para obtener el resultado en la escala original. A continuación el código necesario para retornar a la escala original.
 
 ```{r}
-yhat <- myprediction$net.result * (max(datos$Resistencia)-min(datos$Resistencia))+min(datos$Resistencia)
-datos$yhat <- yhat
+yhat_red <- myprediction$net.result * (max(datos$Resistencia)-min(datos$Resistencia))+min(datos$Resistencia)
+datos$yhat_red <- yhat_red
+yhat_red[1:5] # Para ver los primeros 5 valores estimados
 ```
 
 Para comparar los resultados obtenidos con la red neuronal podemos dibujar los valores observados $y$ contra los valores $\hat{y}$. A continuación se muestra el código para crear el gráfico de dispersión al cual se le agrega un línea recta a 45 grados como referencia; entre más cerca este un punto de la línea, significa que $\hat{y}$ y $y$ son cercanos.
 
 ```{r}
-ggplot(datos, aes(x=Resistencia, y=yhat)) + geom_point() +
+ggplot(datos, aes(x=Resistencia, y=yhat_red)) + geom_point() +
   geom_abline(intercept=0, slope=1, color="blue", linetype="dashed", size=1.5)
 ```
 
 Del gráfico anterior podemos ver que las estimaciones $\hat{y}$ son cercanas a los verdaderos $y$, adicionalmente el coeficiente de correlación lineal calculado es de `r cor(datos$Resistencia, datos$yhat)` lo cual es un valor alto.
 
+## Comparación con un modelo lineal simple
+[Montgomery, Peck and Vining (2003)](https://www.amazon.com/Introduccion-analisis-regresion-lineal-Spanish/dp/9702403278) en el ejemplo 2.1 ajustaron un modelo de regresión lineal simple el cual se puede replicar con el siguiente código.
+
+```{r}
+mod2 <- lm(Resistencia ~ Edad, data=datos)
+coef(mod2)
+```
+
+Usando los resultados anteriores el modelo de regresión lineal simple sería
+
+$$
+\widehat{Resistencia}_i = 2627.82236 - 37.15359 \times Edad_i
+$$
+
+Los valores estimados para la resistencia con el modelo lineal simple se pueden obtener de la siguiente manera.
+
+```{r}
+yhat_mls <- fitted(mod2)
+yhat_mls[1:5] # Para ver los primeros 5 valores estimados
+```
+
+Para comparar la red neuronal con el modelo lineal simple vamos a usar el $ECM$ dado por la siguiente expresión:
+
+$$
+ECM = \frac{\sum_{i=1}^{n} (y_i - \hat{y}_i)^2}{n}
+$$
+
+```{r}
+ecm_red <- mean((datos$Resistencia - yhat_red)^2)
+ecm_red
+ecm_rls <- mean((datos$Resistencia - yhat_mls)^2)
+ecm_rls
+```
+
+
+
 ## Red neuronal con dos capas
 Como ilustración vamos a construir una segunda red con dos capas, la primera con 2 nodos y la segunda con 3 nodos, a continuación el código.
 
 ```{r}
-mod2 <- neuralnet(Resistencia ~ Edad, data=scaled, 
+mod3 <- neuralnet(Resistencia ~ Edad, data=scaled, 
                   hidden=c(2, 3), threshold=0.01)
 ```
 
 Nuevamente podemos dibujar la red construída.
 
 ```{r}
-plot(mod2, rep="best")
+plot(mod3, rep="best")
 ```

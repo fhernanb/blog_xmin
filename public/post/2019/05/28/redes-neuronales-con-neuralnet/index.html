@@ -105,18 +105,18 @@ mod1 &lt;- neuralnet(Resistencia ~ Edad, data=scaled,
 ##  [7] &quot;linear.output&quot;       &quot;data&quot;                &quot;exclude&quot;            
 ## [10] &quot;net.result&quot;          &quot;weights&quot;             &quot;generalized.weights&quot;
 ## [13] &quot;startweights&quot;        &quot;result.matrix&quot;</code></pre>
-<p>El elemento <code>act.fct</code> es la función de activación y el elemento <code>weights</code> contine los pesos mostrados en la anterior figura. Estos dos elementos nos serán útiles más adelante. A continuación el código para explorar lo que hay dentro de estos dos elementos.</p>
+<p>El elemento <code>act.fct</code> es la función de activación (<a href="https://en.wikipedia.org/wiki/Logistic_function">logística</a> por defecto) y el elemento <code>weights</code> contiene los pesos mostrados en la anterior figura. Estos dos elementos serán útiles más adelante. A continuación el código para explorar lo que hay dentro de estos dos elementos.</p>
 <pre class="r"><code>mod1$act.fct          # Activation function</code></pre>
 <pre><code>## function (x) 
 ## {
 ##     1/(1 + exp(-x))
 ## }
-## &lt;bytecode: 0x0000000017e69b60&gt;
-## &lt;environment: 0x0000000017e6ca80&gt;
+## &lt;bytecode: 0x000000000773d040&gt;
+## &lt;environment: 0x0000000007736300&gt;
 ## attr(,&quot;type&quot;)
 ## [1] &quot;logistic&quot;</code></pre>
-<pre class="r"><code>unlist(mod1$weights)  # Weights</code></pre>
-<pre><code>## [1]  0.04503798 -1.42174223 -0.50341523  2.77747568</code></pre>
+<pre class="r"><code>unlist(mod1$weights)  # To obtain weights in vector form</code></pre>
+<pre><code>## [1]  0.8321618 -2.0967603 -0.3463819  1.7832961</code></pre>
 </div>
 <div id="prediccion" class="section level2">
 <h2>Predicción</h2>
@@ -126,33 +126,67 @@ mod1 &lt;- neuralnet(Resistencia ~ Edad, data=scaled,
 myprediction &lt;- compute(x=mod1, covariate=test)</code></pre>
 <p>El objeto <code>myprediction</code> tiene varios elementos y uno de ellos es <code>$net.result</code> que contiene las predicciones. A continuación vamos a explorar los 5 primeros valores.</p>
 <pre class="r"><code>myprediction$net.result[1:5]</code></pre>
-<pre><code>## [1] 0.36394601 0.09168674 0.66104258 0.30962177 0.76665751</code></pre>
-<p>Preguntas que el lector debe tener en este momento son ¿de dónde vienen los valores anteriores? ¿cómo puedo obtener esos valores de la red gráfica?</p>
-<p>Para responder esas preguntas vamos a tomar como ejemplo el primer valor de la Edad escalada, es decir el valor 0.5869565. Vamos introducir este valor en la red número uno y vamos a realizar las operaciones indicadas en la figura asociadas a <code>mod1</code>.</p>
+<pre><code>## [1] 0.36990022 0.08227161 0.67155195 0.31216049 0.76912419</code></pre>
+<p>Algunas preguntas que el lector debe tener en este momento son:</p>
+<ul>
+<li>¿de dónde vienen los valores anteriores?</li>
+<li>¿cómo puedo obtener esos valores de la red gráfica?</li>
+</ul>
+<p>Para responder las preguntas vamos a tomar como ejemplo el primer valor de la Edad escalada, es decir el valor 0.5869565, y con ella vamos a estimar el valor de resistencia escalada. Vamos introducir este valor en la red número uno y vamos a realizar las operaciones indicadas en la figura asociadas a <code>mod1</code>.</p>
 <p><span class="math display">\[\begin{equation}
 \begin{split}
-\widehat{Resistencia} &amp; = FunAct(Edad_1 \times -1.4217422 + 0.045038) \times 2.7774757 + -0.5034152 \\
- &amp; = FunAct(0.5869565 \times -1.4217422 + 0.045038) \times 2.7774757 + -0.5034152\\
- &amp; = 0.363946
+\widehat{Resistencia}_1 &amp; = FunAct(Edad_1 \times -2.0967603 + 0.8321618) \times 1.7832961 + -0.3463819 \\
+ &amp; = FunAct(0.5869565 \times -2.0967603 + 0.8321618) \times 1.7832961 + -0.3463819\\
+ &amp; = 0.3699002
 \end{split}
 \end{equation}\]</span></p>
-<p>El elemento <code>$net.result</code> del objeto <code>myprediction</code> tiene el <span class="math inline">\(\hat{y}\)</span> o respuesta estimada pero en la forma <strong>escalada</strong>, por esta razón es necesario aplicar la transformación inversa para obtener el resultado en la escala original. A continuación el código necesario para retornar a la escala original.</p>
-<pre class="r"><code>yhat &lt;- myprediction$net.result * (max(datos$Resistencia)-min(datos$Resistencia))+min(datos$Resistencia)
-datos$yhat &lt;- yhat</code></pre>
+<p>Del anterior resultado vemos que <span class="math inline">\(\widehat{Resistencia}_1\)</span> coincide con el valor obtenido de <code>myprediction$net.result[1]</code>, esto responde las dos preguntas anteriores.</p>
+<p>Otro aspecto importante es que el elemento <code>$net.result</code> del objeto <code>myprediction</code> tiene el <span class="math inline">\(\hat{y}\)</span> o respuesta estimada pero en la forma <strong>escalada</strong>, por esta razón es necesario aplicar la transformación inversa para obtener el resultado en la escala original. A continuación el código necesario para retornar a la escala original.</p>
+<pre class="r"><code>yhat_red &lt;- myprediction$net.result * (max(datos$Resistencia)-min(datos$Resistencia))+min(datos$Resistencia)
+datos$yhat_red &lt;- yhat_red
+yhat_red[1:5] # Para ver los primeros 5 valores estimados</code></pre>
+<pre><code>## [1] 2039.191 1758.451 2333.618 1982.834 2428.854</code></pre>
 <p>Para comparar los resultados obtenidos con la red neuronal podemos dibujar los valores observados <span class="math inline">\(y\)</span> contra los valores <span class="math inline">\(\hat{y}\)</span>. A continuación se muestra el código para crear el gráfico de dispersión al cual se le agrega un línea recta a 45 grados como referencia; entre más cerca este un punto de la línea, significa que <span class="math inline">\(\hat{y}\)</span> y <span class="math inline">\(y\)</span> son cercanos.</p>
-<pre class="r"><code>ggplot(datos, aes(x=Resistencia, y=yhat)) + geom_point() +
+<pre class="r"><code>ggplot(datos, aes(x=Resistencia, y=yhat_red)) + geom_point() +
   geom_abline(intercept=0, slope=1, color=&quot;blue&quot;, linetype=&quot;dashed&quot;, size=1.5)</code></pre>
 <p><img src="/post/neuralnet01_files/figure-html/unnamed-chunk-15-1.png" width="384" style="display: block; margin: auto;" /></p>
-<p>Del gráfico anterior podemos ver que las estimaciones <span class="math inline">\(\hat{y}\)</span> son cercanas a los verdaderos <span class="math inline">\(y\)</span>, adicionalmente el coeficiente de correlación lineal calculado es de 0.9467622 lo cual es un valor alto.</p>
+<p>Del gráfico anterior podemos ver que las estimaciones <span class="math inline">\(\hat{y}\)</span> son cercanas a los verdaderos <span class="math inline">\(y\)</span>, adicionalmente el coeficiente de correlación lineal calculado es de 0.9482995 lo cual es un valor alto.</p>
+</div>
+<div id="comparacion-con-un-modelo-lineal-simple" class="section level2">
+<h2>Comparación con un modelo lineal simple</h2>
+<p><a href="https://www.amazon.com/Introduccion-analisis-regresion-lineal-Spanish/dp/9702403278">Montgomery, Peck and Vining (2003)</a> en el ejemplo 2.1 ajustaron un modelo de regresión lineal simple el cual se puede replicar con el siguiente código.</p>
+<pre class="r"><code>mod2 &lt;- lm(Resistencia ~ Edad, data=datos)
+coef(mod2)</code></pre>
+<pre><code>## (Intercept)        Edad 
+##  2627.82236   -37.15359</code></pre>
+<p>Usando los resultados anteriores el modelo de regresión lineal simple sería</p>
+<p><span class="math display">\[
+\widehat{Resistencia}_i = 2627.82236 - 37.15359 \times Edad_i
+\]</span></p>
+<p>Los valores estimados para la resistencia con el modelo lineal simple se pueden obtener de la siguiente manera.</p>
+<pre class="r"><code>yhat_mls &lt;- fitted(mod2)
+yhat_mls[1:5] # Para ver los primeros 5 valores estimados</code></pre>
+<pre><code>##        1        2        3        4        5 
+## 2051.942 1745.425 2330.594 1996.211 2423.478</code></pre>
+<p>Para comparar la red neuronal con el modelo lineal simple vamos a usar el <span class="math inline">\(ECM\)</span> dado por la siguiente expresión:</p>
+<p><span class="math display">\[
+ECM = \frac{\sum_{i=1}^{n} (y_i - \hat{y}_i)^2}{n}
+\]</span></p>
+<pre class="r"><code>ecm_red &lt;- mean((datos$Resistencia - yhat_red)^2)
+ecm_red</code></pre>
+<pre><code>## [1] 8531.351</code></pre>
+<pre class="r"><code>ecm_rls &lt;- mean((datos$Resistencia - yhat_mls)^2)
+ecm_rls</code></pre>
+<pre><code>## [1] 8312.743</code></pre>
 </div>
 <div id="red-neuronal-con-dos-capas" class="section level2">
 <h2>Red neuronal con dos capas</h2>
 <p>Como ilustración vamos a construir una segunda red con dos capas, la primera con 2 nodos y la segunda con 3 nodos, a continuación el código.</p>
-<pre class="r"><code>mod2 &lt;- neuralnet(Resistencia ~ Edad, data=scaled, 
+<pre class="r"><code>mod3 &lt;- neuralnet(Resistencia ~ Edad, data=scaled, 
                   hidden=c(2, 3), threshold=0.01)</code></pre>
 <p>Nuevamente podemos dibujar la red construída.</p>
-<pre class="r"><code>plot(mod2, rep=&quot;best&quot;)</code></pre>
-<p><img src="/post/neuralnet01_files/figure-html/unnamed-chunk-17-1.png" width="384" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plot(mod3, rep=&quot;best&quot;)</code></pre>
+<p><img src="/post/neuralnet01_files/figure-html/unnamed-chunk-20-1.png" width="384" style="display: block; margin: auto;" /></p>
 </div>
 
 </main>
