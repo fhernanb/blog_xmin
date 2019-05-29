@@ -86,12 +86,12 @@ mod1 &lt;- neuralnet(Resistencia ~ Edad, data=scaled,
 ## {
 ##     1/(1 + exp(-x))
 ## }
-## &lt;bytecode: 0x0000000017e6ccb8&gt;
-## &lt;environment: 0x0000000017e6c350&gt;
+## &lt;bytecode: 0x0000000017e7d9e0&gt;
+## &lt;environment: 0x0000000017e7d078&gt;
 ## attr(,&quot;type&quot;)
 ## [1] &quot;logistic&quot;</code></pre>
 <pre class="r"><code>unlist(mod1$weights)  # Weights</code></pre>
-<pre><code>## [1] -1.992992  2.567690  1.032744 -1.631167</code></pre>
+<pre><code>## [1] -0.01188768 -1.47766476 -0.44316390  2.74229792</code></pre>
 <p>Como ilustración vamos a construir una segunda red con dos capas, la primera con 2 nodos y la segunda con 3 nodos, a continuación el código.</p>
 <pre class="r"><code>mod2 &lt;- neuralnet(Resistencia ~ Edad, data=scaled, 
                   hidden=c(2, 3), threshold=0.01)</code></pre>
@@ -107,11 +107,11 @@ mod1 &lt;- neuralnet(Resistencia ~ Edad, data=scaled,
 myprediction &lt;- compute(x=mod1, covariate=test)</code></pre>
 <p>El objeto <code>myprediction</code> tiene varios elementos y uno de ellos es <code>$net.result</code> que contiene las predicciones. A continuación vamos a explorar los 5 primeros valores.</p>
 <pre class="r"><code>myprediction$net.result[1:5]</code></pre>
-<pre><code>## [1] 0.41148589 0.04245773 0.68972070 0.34591973 0.75925183</code></pre>
+<pre><code>## [1] 0.36126442 0.09529517 0.65909037 0.30759301 0.76642941</code></pre>
 <p>Preguntas que el lector debe tener en este momento son ¿de dónde vienen los valores anteriores? ¿cómo puedo obtener esos valores de la red gráfica?</p>
 <p>Para responder esas preguntas vamos a tomar como ejemplo el primer valor de la Edad escalada, es decir el valor 0.5869565. Vamos introducir este valor en la red número uno y vamos a realizar las operaciones indicadas en la figura asociadas a <code>mod1</code>.</p>
 <p><span class="math display">\[
-\widehat{Resistencia} = FunAct(Edad_1 \times 2.5676901 + -1.9929915) \times w[4] + w[3] = myprediction$net.result[1]
+\widehat{Resistencia} = FunAct(Edad_1 \times -1.4776648 + -0.0118877) \times 2.7422979 + -0.4431639 = 0.3612644
 \]</span></p>
 <p>El elemento <code>$net.result</code> del objeto <code>myprediction</code> tiene el <span class="math inline">\(\hat{y}\)</span> o respuesta estimada pero en la forma <strong>escalada</strong>, por esta razón es necesario aplicar la transformación inversa para obtener el resultado en la escala original <span class="math inline">\(\hat{y}\)</span>.</p>
 <pre class="r"><code>yhat &lt;- myprediction$net.result * (max(datos$Resistencia)-min(datos$Resistencia))+min(datos$Resistencia)
