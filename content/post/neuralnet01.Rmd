@@ -65,7 +65,6 @@ A continuación vamos a comparar las primeras 6 filas de `datos` y de `scaled` p
 head(cbind(datos, scaled))
 ```
 
-
 En la siguiente figura se muestra el diagrama de dispersión para las variables escaladas. Al comparar ambos gráficos de dispersión (con `datos` y con `scaled`) se observa el mismo patrón en la nube de puntos, la única diferencia es que ahora los valores de las variables ($Y$ y $X$) están en $(0, 1)$.
 
 ```{r}
@@ -115,12 +114,9 @@ El objeto `myprediction` tiene varios elementos y uno de ellos es `$net.result` 
 myprediction$net.result[1:5]
 ```
 
-Algunas preguntas que el lector debe tener en este momento son:
+Una pregunta que el lector debe tener en este momento es ¿de dónde vienen los valores anteriores?
 
-- ¿de dónde vienen los valores anteriores?
-- ¿cómo puedo obtener esos valores de la red gráfica?
-
-Para responder las preguntas vamos a tomar como ejemplo el primer valor de la Edad escalada, es decir el valor `r test[1, 1]`, y con ella vamos a estimar el valor de resistencia escalada. Vamos introducir este valor en la red número uno y vamos a realizar las operaciones indicadas en la figura asociadas a `mod1`.
+Para responder la pregunta vamos a tomar como ejemplo el primer valor de la Edad escalada, es decir el valor `r test[1, 1]`, y con ella vamos a estimar el valor de resistencia escalada. Vamos introducir este valor en la red número uno y vamos a realizar las operaciones indicadas en la figura asociadas a `mod1`.
 
 ```{r, echo=FALSE}
 w <- unlist(mod1$weights)
